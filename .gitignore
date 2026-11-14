@@ -1,0 +1,9 @@
+# OMC / agent runtime state
+.omc/
+.memsearch/
+.omb/
+
+# Local editor / OS files
+.DS_Store
+Thumbs.db
+*.tmp
