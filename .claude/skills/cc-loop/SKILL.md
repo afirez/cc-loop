@@ -25,7 +25,7 @@ All three source prompts are recovered verbatim from yetone's X screenshots repr
 2. Read `references/lessons-format.md` and create the `LESSONS.md` skeleton.
 3. Read `references/code-standards-template.md` and create `docs/code-standards.md`: start with 1–2 non-negotiable hard rules, and spell out the Acceptance criteria (what counts as a real run) and the product-decision rule.
 4. If other documents referenced by the routing table (`docs/contributors.md`, `docs/subsystems/`, etc.) are missing, confirm with the user before creating skeletons. Do not invent product decisions or verification procedures.
-5. Magpie has no `docs/product.md` or `docs/verification.md`; do not create them. Product decisions and acceptance criteria live in `docs/code-standards.md`.
+5. Magpie has no separate product or verification documents; do not create them. Product decisions and acceptance criteria live in `docs/code-standards.md`.
 
 ## Configure the three Loops
 

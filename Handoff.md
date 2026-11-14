@@ -61,7 +61,7 @@ Magpie 的 `CLAUDE.md` 极简，只有两个引用：`AGENTS.md` 和 `LESSONS.md
 **frontmatter 规范**（Claude Code 官方文档 + Agent Skills 规范，2026-11-13 核对）：
 
 - `name`：Claude Code 侧**可选**，默认取目录名，且允许与目录名不一致（只限定禁止字符）。Agent Skills 规范侧（claude.ai 上传 / Skills API / `package_skill.py`）**必填**：1–64 字符，仅 `a-z`、`0-9`、`-`，不得以 `-` 开头或结尾，不得有连续 `--`，且必须与父目录名一致。本 Skill 显式写 `name: cc-loop` 并与目录名一致，同时满足两套规则。
-- `description`：Claude Code 侧推荐；`description` + `when_to_use` 在技能列表中合计截断于 **1,536 字符**。Agent Skills 规范侧**必填** 1–1,024 字符。交接稿原写的 1,024 是规范侧限制，不是 Claude Code 的 listing 上限；本 Skill 的 148 字符同时满足两侧。
+- `description`：Claude Code 侧推荐；`description` + `when_to_use` 在技能列表中合计截断于 **1,536 字符**。Agent Skills 规范侧**必填** 1–1,024 字符。交接稿原写的 1,024 是规范侧限制，不是 Claude Code 的 listing 上限；本 Skill 的约 324 字符同时满足两侧。
 - 只使用 `name` 和 `description` 即可；`context: fork`、`disable-model-invocation` 等字段按需添加。当前 Skill 是编排型，**不要**设置 fork；`disable-model-invocation` 保持默认 `false`（允许自动触发）。
 
 ---
@@ -283,7 +283,7 @@ description: 用 Magpie 的负反馈闭环让 Claude Code 持续维护项目。�
 - https://agentskills.io/specification（Agent Skills 开放规范）
 - 项目级路径：`.claude/skills/<skill-name>/SKILL.md`；嵌套目录的技能在 Claude 处理该目录文件时加载，或用 `/add-dir`。
 - `name`：Claude Code 侧可选（默认目录名，允许不一致）；Agent Skills 规范侧必填、1–64 字符、仅 `a-z0-9-`、不得首尾连字符或连续 `--`、必须与父目录同名。本 Skill 同时满足。
-- `description`：Claude Code 侧 `description` + `when_to_use` 在 listing 中合计截断于 1,536 字符；Agent Skills 规范侧必填 1–1,024 字符。本 Skill 148 字符，两侧都满足。
+- `description`：Claude Code 侧 `description` + `when_to_use` 在 listing 中合计截断于 1,536 字符；Agent Skills 规范侧必填 1–1,024 字符。本 Skill 约 324 字符，两侧都满足。
 - `disable-model-invocation` 默认 `false`；`context: fork` 为可选字段。当前 Skill 两者都不设置，符合设计。
 - Progressive disclosure：官方建议 metadata 约 100 tokens、SKILL.md 正文 < 5,000 tokens 且 < 500 行、references 只深一层。本 Skill 的 SKILL.md 为 46 行 / 约 2.6 KB，符合。
 - 官方校验：`claude plugin validate .claude/skills`（v2.1.233+），本 Skill 已通过（2026-11-13）。`/skills`、`/reload-skills`、`/skill-doctor` 可查看加载状态与上下文开销。

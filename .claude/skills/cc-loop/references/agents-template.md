@@ -21,5 +21,5 @@ Before starting any work, read the documents that match the task type. The routi
 @LESSONS.md
 ```
 
-3. Magpie has no `docs/product.md` or `docs/verification.md`; do not create them. Product decisions and acceptance criteria live in `docs/code-standards.md`.
+3. Magpie has no separate product or verification documents; do not create them. Product decisions and acceptance criteria live in `docs/code-standards.md`.
 4. If `docs/contributors.md` or `docs/subsystems/` is missing, confirm with the user before creating skeletons. Do not invent product decisions or verification procedures.
