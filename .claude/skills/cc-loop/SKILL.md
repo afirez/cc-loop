@@ -54,7 +54,7 @@ Write down "what counts as a real run" in the Acceptance criteria of `docs/code-
 
 ## Review gate
 
-Before merging, write the record in `references/pr-review-record.md`: reviewed head, harm check, what was run, Red check, Break check, and `Not run`. Check the head with `gh pr view <pr> --json headRefOid`, then merge with `gh pr merge <pr> --match-head-commit <sha>`.
+Before merging, post the record from `references/pr-review-record.md` as a PR comment: reviewed head, harm check, what was run, Red check, Break check, and `Not run`. Check the head with `gh pr view <pr> --json headRefOid`, then merge with `gh pr merge <pr> --match-head-commit <sha>`.
 
 ## Human boundary
 

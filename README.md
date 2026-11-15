@@ -47,7 +47,7 @@ Each Loop file contains the **verbatim Chinese source prompt** recovered from ye
 
 The only helper script is `scripts/lint-package.sh`, a package-level lint for this skill. It is not Magpie's verification: Magpie verifies with `test.yml`, `make test` / `make test-ui`, `build/race-shards.sh`, and real machines. Night-audit collection and reviewed-head merges use native `git` / `gh` commands, documented in the loop files.
 
-`tests/run.sh` tests the lint against good and broken fixtures. `.github/workflows/test.yml` runs it on Ubuntu, macOS, and Windows; `.github/workflows/release.yml` runs it on a `v*` tag before packaging a release.
+`tests/run.sh` tests the lint against good and broken fixtures, plus the workflow/doc gates. `.github/workflows/test.yml` runs it on Ubuntu, macOS, and Windows; `.github/workflows/release.yml` runs it on a `v*` tag after the tag/semver/main check and before packaging a release.
 
 ## Install
 

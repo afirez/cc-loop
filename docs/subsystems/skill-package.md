@@ -6,8 +6,8 @@
 - `references/` holds the templates, the three loop prompts (verbatim Chinese source + English operational version), the review record, and the runtime contract.
 - `scripts/lint-package.sh` runs the package lint.
 - Promotion is agent work: read `LESSONS.md`, count `Seen` and distinct dates, and edit `docs/code-standards.md`; no script is required.
-- `tests/run.sh` tests the package lint against good and broken fixtures.
-- `.github/workflows/test.yml` runs the tests and lint on Ubuntu, macOS, and Windows; `.github/workflows/release.yml` packages a tagged release.
+- `tests/run.sh` tests the package lint against good and broken fixtures, plus the workflow/doc gates.
+- `.github/workflows/test.yml` runs the tests and lint on Ubuntu, macOS, and Windows; `.github/workflows/release.yml` verifies the tag is `vX.Y.Z` on `main`, serializes releases, and packages a tagged release.
 - `.github/ISSUE_TEMPLATE/` holds the bug/feature intake forms.
 - The package does not schedule loops, call GitHub/Discord/X APIs, or enforce another project's hooks. Those are the user's toolchain; the skill documents the requirements.
 

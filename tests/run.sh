@@ -1,7 +1,8 @@
 #!/usr/bin/env sh
 # run.sh — package test suite for the cc-loop skill.
 # Usage: sh tests/run.sh [repo-root]
-# Runs lint-package.sh against good and broken fixtures.
+# Runs lint-package.sh against good and broken fixtures, then checks the
+# workflow and documentation gates that the package relies on.
 # Exit codes: 0 all tests pass; 1 one or more tests failed.
 
 set -u
@@ -102,6 +103,27 @@ else
   bad "missing README is Not run (exit $code)"
 fi
 rm -rf "$d"
+
+# 7. Workflow gates: CI concurrency + release tag/main checks.
+if grep -q '^concurrency:' "$ROOT/.github/workflows/test.yml" \
+  && grep -q '^concurrency:' "$ROOT/.github/workflows/release.yml" \
+  && grep -q 'merge-base --is-ancestor' "$ROOT/.github/workflows/release.yml" \
+  && grep -q 'is not on main' "$ROOT/.github/workflows/release.yml" \
+  && grep -q 'is not vX.Y.Z' "$ROOT/.github/workflows/release.yml"; then
+  ok "workflow gates present"
+else
+  bad "workflow gates present"
+fi
+
+# 8. Review record is posted on the PR, not written into the template.
+if grep -qi 'post the record from' "$ROOT/.claude/skills/cc-loop/SKILL.md" \
+  && grep -qi 'post the record from' "$ROOT/docs/code-standards.md" \
+  && ! grep -qi 'write the record in' "$ROOT/.claude/skills/cc-loop/SKILL.md" \
+  && ! grep -qi 'write the record in' "$ROOT/docs/code-standards.md"; then
+  ok "review record wording"
+else
+  bad "review record wording"
+fi
 
 echo
 if [ "$FAIL" -eq 0 ]; then
