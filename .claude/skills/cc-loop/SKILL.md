@@ -39,6 +39,7 @@ Load the relevant file on demand; do not read all of them at once:
 - Real surfaces to record: `references/verification-matrix.md`
 - Copy-paste `/loop` templates: `references/loop-prompt-templates.md`
 - Test discovery: `references/test-discovery.md`
+- Target-project CI template: `references/ci-template.md`
 
 ## Optional tools
 

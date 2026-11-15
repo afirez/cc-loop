@@ -26,6 +26,7 @@
 - Real surfaces: `references/verification-matrix.md`.
 - Loop templates: `references/loop-prompt-templates.md`.
 - Test discovery: `references/test-discovery.md`.
+- Target-project CI template: `references/ci-template.md`.
 - Package tests: `tests/run.sh`; CI: `.github/workflows/test.yml`; release: `.github/workflows/release.yml`.
 - Promotion: agent reads `LESSONS.md`; no script.
 - Package lint: `scripts/lint-package.sh`; tests: `tests/run.sh`; CI: `.github/workflows/test.yml`.

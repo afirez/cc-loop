@@ -221,3 +221,23 @@ This is the Magpie-style method applied to `cc-loop` itself: each change is revi
 **Seen 1×** (2026-11-15)
 
 **Scope**: Any review-record convention.
+
+## Rule: Do not invent a preferences file; use the host memory and existing design docs.
+
+**Why**: `docs/preferences.md` was a proposed path, but Magpie has no such file. Its mechanism is the host's memory system plus `docs/subsystems/` design docs and the product decisions in `docs/code-standards.md`. A new file would be another invented upstream path.
+
+**Evidence**: Magpie `docs/` listing; `docs/preferences.md` probe 404; code-standards "Don't reverse deliberate decisions"; dotey/AI智见录 memory description.
+
+**Seen 1×** (2026-11-15)
+
+**Scope**: Any skill that captures human preferences.
+
+## Rule: Templates align the behavior chain; execution waits for credentials or hardware.
+
+**Why**: Tests, CI, connectors, and real machines can be described and templated before access exists. That is behavior-chain alignment, not execution. The surface stays `Not run` until a credential, account, or machine actually runs the command.
+
+**Evidence**: `references/ci-template.md`, `connectors.md`, `verification-matrix.md`, `test-discovery.md`.
+
+**Seen 1×** (2026-11-15)
+
+**Scope**: Any externally connected or hardware-dependent behavior.

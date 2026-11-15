@@ -16,3 +16,10 @@ Record the surfaces a change was actually run on. A surface not run is `Not run`
 - A mock-only run is not a real-use check.
 - Record the command, the head, and the result.
 - A check that was not run is written `Not run`, never omitted.
+
+## Filling it
+
+- Replace `<...>` with the project's actual command or account.
+- A surface with no credential, account, or machine is `Not run`.
+- When a credential or machine arrives, add the smoke test and the first real run here.
+- A template is not a run: the row changes from `Not run` only after the real command returns.
