@@ -22,6 +22,7 @@ Source: screenshot "yetone 分享的第一条 loop 提示词" in the AI智见录
    - Read the code and logic line by line, and check it against every rule in `docs/code-standards.md`.
    - The source prompt's concern: a PR may be written blindly by a coding agent and never tested by its author. Assume nothing; verify everything.
    - Pull the branch locally and run it in a real environment according to the Acceptance criteria in `docs/code-standards.md` (and the verification commands in the subsystem docs).
+   - Merge the reviewed head onto current `main` locally and run the checks on the merged result, not only on the PR head. Record the base and the result.
    - Do the physical falsification: put the old code back and run the new test. The test must actually fail, proving that it covers the fix. If it does not fail, the verification is invalid and the PR must not be merged.
    - Do not merge a PR that fails, cannot be shown to have been tested, or fails the falsification check; reply with the reason and close it.
 3. After fixing or implementing an issue, release and reply to the reporter. Merge passing PRs and trigger the release pipeline.

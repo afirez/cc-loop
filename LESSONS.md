@@ -101,3 +101,13 @@ This is the Magpie-style method applied to `cc-loop` itself: each change is revi
 **Seen 1×** (2026-11-15)
 
 **Scope**: Any check that depends on an optional external tool.
+
+## Rule: Review the merged result, not only the PR head.
+
+**Why**: Magpie's code standards merge the reviewed head onto current `main` and run the checks on the result. Running only the PR head can miss a conflict or a base change that breaks the merged tree. The first cc-loop loop file said "pull and run" without the local merge step.
+
+**Evidence**: Magpie `docs/code-standards.md` ("A PR is merged only after a maintainer has pulled it, merged it onto current main and run the checks above on the result"); `loop-github.md` step 2 and `pr-review-record.md` updated during the alignment audit.
+
+**Seen 1×** (2026-11-15)
+
+**Scope**: Any PR review gate.

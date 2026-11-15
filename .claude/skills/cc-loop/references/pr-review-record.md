@@ -6,6 +6,7 @@ Post this as a PR comment (or in the review) before merging. A merge with no rec
 
 - Reviewed commit: `<sha>`
 - Base: `<sha>` / `main`
+- Merged onto current `main` locally and checked: yes/no — result:
 - Merge: `scripts/merge-reviewed.sh <pr> <reviewed sha>` or `gh pr merge --match-head-commit <reviewed sha>`
 
 ## Harm check

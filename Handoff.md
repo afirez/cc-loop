@@ -324,6 +324,7 @@ description: 用 Magpie 的负反馈闭环让 Claude Code 持续维护项目。�
 |---|---|---|
 | CI 三端矩阵 / PR 校验 | 无 | `scripts/verify.sh` + `.github/workflows/verify.yml` |
 | PR 审查记录（Red check / Break check / Not run） | 只有 prompt | `references/pr-review-record.md`；`scripts/merge-reviewed.sh` |
+| 审阅“合到当前 main 后的结果” | 只有 prompt | `loop-github.md` 增加本地合入 main 后跑检查；`pr-review-record.md` 记录 base/merged result |
 | 社区 PR 危害/关闭/黑名单模板 | 路由到 `docs/contributors.md`，但无模板 | `references/contributors-template.md` |
 | 子系统 reference / 验证命令模板 | 路由到 `docs/subsystems/`，但无模板 | `references/subsystems-template.md` |
 | 夜审数据收集 | 只有 prompt | `scripts/collect-day.sh`（无 `gh` 时 PR 标 `Not run`） |

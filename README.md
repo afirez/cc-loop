@@ -139,6 +139,7 @@ In a Claude Code session, run `/skills` or ask "What skills are available?" and 
 The method's gate is in `docs/code-standards.md`:
 
 - put the old code back and run the new test; it must actually fail;
+- merge the reviewed head onto current `main` locally and run the checks on the merged result;
 - run the change locally in a real environment before merging;
 - mark every check that was not run as `Not run`;
 - record what was run, at which head, and what was not run.

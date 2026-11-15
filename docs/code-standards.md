@@ -6,7 +6,7 @@ These rules come from lessons promoted after repeated incidents. Every change is
 
 1. **A change that was not actually run must not be merged.** Run the verification commands below; a change whose checks cannot be shown to have run is unverified.
 2. **Checks that were not run must be marked `Not run`.** "Looks fine" is not a substitute for actual verification.
-3. **A merge records the reviewed head.** Write the record in `.claude/skills/cc-loop/references/pr-review-record.md`; merge at that head with `--match-head-commit` (or `scripts/merge-reviewed.sh`). A merge with no record of what was run cannot be checked afterwards.
+3. **A merge records the reviewed head and the merged result.** Write the record in `.claude/skills/cc-loop/references/pr-review-record.md`; merge the reviewed head onto current `main` locally and run the checks on the merged result; merge at that head with `--match-head-commit` (or `scripts/merge-reviewed.sh`). A merge with no record of what was run cannot be checked afterwards.
 
 ## Acceptance criteria (what counts as a real run)
 
@@ -20,7 +20,7 @@ Every item must be demonstrated before merging or releasing. Anything not run is
 6. **No runtime state**: `.omc/`, `.memsearch/`, `.omb/`, and local editor/OS files are not committed.
 7. **Record**: the change/PR states what was run, at which commit, and what was not run.
 8. **Verify gate**: `sh .claude/skills/cc-loop/scripts/verify.sh` passes, and `.github/workflows/verify.yml` runs it on push/PR.
-9. **Review record / merge gate**: a merge uses `references/pr-review-record.md` and `--match-head-commit` or `scripts/merge-reviewed.sh`; a review with no record is not a merge.
+9. **Review record / merge gate**: a merge uses `references/pr-review-record.md`, runs the checks on the reviewed head merged onto current `main`, and uses `--match-head-commit` or `scripts/merge-reviewed.sh`; a review with no record is not a merge.
 10. **Release gate**: if this repo tags/releases, the tagged head had a green verification run; record what was run and do not move an older release to Latest.
 
 ## Product decisions (human-owned)
