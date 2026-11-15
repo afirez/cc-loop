@@ -11,6 +11,7 @@ Use the agent's own tools before adding a wrapper:
 - Night-audit input: `git log --since="24 hours ago" --date=short --pretty=format:'- %h %ad %s'`, `git for-each-ref ...`, `gh pr list --state merged --limit 50 ...`.
 - Reviewed-head merge: `gh pr view <pr> --json headRefOid`, then `gh pr merge <pr> --match-head-commit <sha>`.
 - Package lint: `scripts/lint-package.sh` — a package check, not the target project's test suite.
+- Per-surface access: `references/connectors.md`; real surfaces: `references/verification-matrix.md`.
 
 The skill ships no `collect-day` or `merge-reviewed` wrappers; those jobs are one native command each.
 

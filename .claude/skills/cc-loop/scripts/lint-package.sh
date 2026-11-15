@@ -31,6 +31,8 @@ for f in \
   references/subsystems-template.md \
   references/pr-review-record.md \
   references/loop-runtime.md \
+  references/connectors.md \
+  references/verification-matrix.md \
   references/loop-github.md \
   references/loop-social.md \
   references/loop-night-audit.md \
@@ -122,7 +124,9 @@ tmp=$(mktemp -d 2>/dev/null || mktemp -d -t cc-loop-lint)
 cleanup() { rm -rf "$tmp"; }
 trap cleanup EXIT INT TERM
 
-if command -v claude >/dev/null 2>&1; then
+if [ "${LINT_SKIP_CLAUDE:-0}" = "1" ]; then
+  notrun "claude plugin validate (skipped by LINT_SKIP_CLAUDE)"
+elif command -v claude >/dev/null 2>&1; then
   if (cd "$ROOT" && claude plugin validate .claude/skills >"$tmp/claude.out" 2>&1); then
     pass "claude plugin validate"
   else

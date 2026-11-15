@@ -6,7 +6,9 @@
 - `references/` holds the templates, the three loop prompts (verbatim Chinese source + English operational version), the review record, and the runtime contract.
 - `scripts/lint-package.sh` runs the package lint.
 - Promotion is agent work: read `LESSONS.md`, count `Seen` and distinct dates, and edit `docs/code-standards.md`; no script is required.
-- `.github/workflows/lint-package.yml` runs `lint-package.sh` on push/PR.
+- `tests/run.sh` tests the package lint against good and broken fixtures.
+- `.github/workflows/test.yml` runs the tests and lint on Ubuntu, macOS, and Windows; `.github/workflows/release.yml` packages a tagged release.
+- `.github/ISSUE_TEMPLATE/` holds the bug/feature intake forms.
 - The package does not schedule loops, call GitHub/Discord/X APIs, or enforce another project's hooks. Those are the user's toolchain; the skill documents the requirements.
 
 ## Source of truth
@@ -20,8 +22,11 @@
 - Review record / merge gate: `references/pr-review-record.md`.
 - Scheduling and tool contract: `references/loop-runtime.md`.
 - Loop prompts: `references/loop-github.md`, `loop-social.md`, `loop-night-audit.md`.
+- Connectors and tool contract: `references/connectors.md`.
+- Real surfaces: `references/verification-matrix.md`.
+- Package tests: `tests/run.sh`; CI: `.github/workflows/test.yml`; release: `.github/workflows/release.yml`.
 - Promotion: agent reads `LESSONS.md`; no script.
-- Package lint: `scripts/lint-package.sh`; CI: `.github/workflows/lint-package.yml`.
+- Package lint: `scripts/lint-package.sh`; tests: `tests/run.sh`; CI: `.github/workflows/test.yml`.
 - Provenance and design record: `Handoff.md` §6.
 
 ## Runtime path
@@ -30,7 +35,7 @@
 2. `SKILL.md` sends the agent to one reference on demand.
 3. The agent creates the project skeleton (`CLAUDE.md`, `AGENTS.md`, `LESSONS.md`, `docs/...`) from the templates.
 4. The agent runs the loops and the scanner when the user's toolchain provides the required access.
-5. Before a change is pushed, `scripts/lint-package.sh` runs the package lint; CI runs the same script on push/PR.
+5. Before a change is pushed, `scripts/lint-package.sh` runs the package lint; `tests/run.sh` tests it; CI runs both on three OSes on push/PR.
 
 ## State
 
@@ -39,6 +44,7 @@
 
 ## Verification commands
 
+- `sh tests/run.sh`
 - `sh .claude/skills/cc-loop/scripts/lint-package.sh` (package lint; not the target project's test suite)
 - `claude plugin validate .claude/skills` (lint-package.sh runs it when `claude` is available; otherwise `Not run`)
 - `grep -n "Seen" LESSONS.md` (agent counts candidates; no script)

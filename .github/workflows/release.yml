@@ -1,0 +1,31 @@
+name: release
+
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Package tests
+        run: sh tests/run.sh
+      - name: Package lint
+        run: sh .claude/skills/cc-loop/scripts/lint-package.sh
+      - name: Package
+        run: |
+          set -euo pipefail
+          mkdir -p dist
+          tar -czf "dist/cc-loop-${GITHUB_REF_NAME}.tar.gz" .claude/skills/cc-loop
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq zip
+          (cd .claude/skills && zip -qr "../../dist/cc-loop-${GITHUB_REF_NAME}.zip" cc-loop)
+          (cd dist && sha256sum * > SHA256SUMS)
+      - name: Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create "$GITHUB_REF_NAME" dist/* --generate-notes

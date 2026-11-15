@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: How to use cc-loop
+    url: https://github.com/afirez/cc-loop#readme
+    about: Installation, usage, and the three loops.

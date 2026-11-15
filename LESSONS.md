@@ -141,3 +141,43 @@ This is the Magpie-style method applied to `cc-loop` itself: each change is revi
 **Seen 1×** (2026-11-15)
 
 **Scope**: Any rules-promotion mechanism.
+
+## Rule: A checker's test suite needs broken fixtures, not only a valid one.
+
+**Why**: The first valid fixture in `tests/run.sh` omitted `CLAUDE.md`/`LESSONS.md`, so `lint-package.sh` correctly failed; the test exposed the fixture's assumption rather than hiding it.
+
+**Evidence**: `tests/run.sh`; the fixture fix.
+
+**Seen 1×** (2026-11-15)
+
+**Scope**: Any package lint or checker.
+
+## Rule: A 3-OS matrix on a shell tool catches portability assumptions.
+
+**Why**: `mktemp`, `sed -i`, `cp -R`, `awk`, and path handling differ across Git Bash, macOS, and Linux. The package tests/lint now run on ubuntu, macos, and windows.
+
+**Evidence**: `.github/workflows/test.yml`; `tests/run.sh`.
+
+**Seen 1×** (2026-11-15)
+
+**Scope**: Shell scripts and CI that claim portability.
+
+## Rule: A release workflow is a gate, not a tag button.
+
+**Why**: `.github/workflows/release.yml` runs the tests and lint before packaging; a red tag produces no release. Magpie's release uses a separate signing/notarization repo; this is the skill-package equivalent.
+
+**Evidence**: `.github/workflows/release.yml`; the Release gate in `docs/code-standards.md`.
+
+**Seen 1×** (2026-11-15)
+
+**Scope**: Any tagged release process.
+
+## Rule: A connector contract is not a connector.
+
+**Why**: `references/connectors.md` documents the GitHub/Discord/X tool expectations, least privilege, and `Not run` behavior; it ships no credentials and calls no API. Actual access remains the user's toolchain.
+
+**Evidence**: `references/connectors.md`; `loop-runtime.md`.
+
+**Seen 1×** (2026-11-15)
+
+**Scope**: Any externally connected loop.

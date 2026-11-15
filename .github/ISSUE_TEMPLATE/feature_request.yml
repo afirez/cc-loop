@@ -1,0 +1,18 @@
+name: Feature request
+description: Something cc-loop should do
+labels: [enhancement]
+body:
+  - type: textarea
+    id: want
+    attributes:
+      label: What you want to do
+    validations:
+      required: true
+  - type: textarea
+    id: now
+    attributes:
+      label: What you do today instead
+  - type: textarea
+    id: constraints
+    attributes:
+      label: Constraints or prior art

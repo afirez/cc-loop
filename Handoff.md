@@ -326,18 +326,23 @@ description: 用 Magpie 的负反馈闭环让 Claude Code 持续维护项目。�
 
 | Magpie 行为 | cc-loop 原先 | 已内化 |
 |---|---|---|
-| CI 三端矩阵 / PR 校验 | 无 | `scripts/lint-package.sh` + `.github/workflows/lint-package.yml`（package lint，不是工程测试套件） |
+| 工程测试套件 | 无 | `tests/run.sh`（6 个 fixture，测试 lint 自身） |
+| 三端 CI | 无 | `.github/workflows/test.yml`（ubuntu/macos/windows 跑 tests + lint） |
+| 发布流水线 | 无 | `.github/workflows/release.yml`（tag → tests/lint → tar/zip + SHA256SUMS → release；不是 Magpie 的签名/公证） |
 | PR 审查记录（Red check / Break check / Not run） | 只有 prompt | `references/pr-review-record.md`；原生 `gh pr merge --match-head-commit` |
 | 审阅“合到当前 main 后的结果” | 只有 prompt | `loop-github.md` 增加本地合入 main 后跑检查；`pr-review-record.md` 记录 base/merged result |
 | 社区 PR 危害/关闭/黑名单模板 | 路由到 `docs/contributors.md`，但无模板 | `references/contributors-template.md` |
 | 子系统 reference / 验证命令模板 | 路由到 `docs/subsystems/`，但无模板 | `references/subsystems-template.md` |
 | 夜审数据收集 | 只有 prompt | 原生 `git log` / `git for-each-ref` / `gh pr list`（无 collector 脚本） |
 | lessons 升格 | 由 `LESSONS.md` 规则 + 夜审 agent 手工编辑 | 纯 agent 行为；不使用脚本 |
+| 连接器契约 | 只有 prompt | `references/connectors.md`（GitHub/Discord/X 工具契约，不含凭据） |
+| 真机验证矩阵 | 只有 prompt | `references/verification-matrix.md`（macOS/Windows/Linux/real account/hardware） |
+| Issue 模板 | 无 | `.github/ISSUE_TEMPLATE/`（bug/feature） |
 | 调度与工具契约 | 只有 prompt | `references/loop-runtime.md` |
 | 发布门禁（tag 前 CI 绿、记录 head、Latest） | 未写 | `code-standards-template.md` 的 Release gate |
 | 人的安全/物理/UI 闸门 | 部分写在原则 | `code-standards-template.md` 的 Human gates + `contributors-template.md` |
 
-**仍未内化（需要在目标项目或用户工具链里接）**：`/loop`/cron/CI 调度器、GitHub/Discord/X 连接器、目标项目的 CI/hook、plugin/marketplace 打包、真实三端真机。`cc-loop` 现在有**可执行的包级验收门禁**，但没有 Magpie 那样的完整运行基础设施。
+**仍未内化（需要在目标项目或用户工具链里接）**：`/loop`/cron 调度器、真实 GitHub/Discord/X 凭据与连接器、目标项目的测试套件/CI/hook、plugin/marketplace 打包、真实三端真机、agent 行为评测。`cc-loop` 现在有**可执行的包级测试/lint/三端 CI/发布工作流**，但没有 Magpie 那样的完整运行基础设施。
 
 **脚本性质（AI-native 收口）**：只保留一个包级 lint `scripts/lint-package.sh`；它不是 Magpie 的验证，Magpie 用 `test.yml` + `make test`/`make test-ui` + `build/race-shards.sh` + 真机。夜审收集和合并是原生 `git`/`gh` 命令（见 `loop-runtime.md`），不包装成脚本；`collect-day.sh` 和 `merge-reviewed.sh` 已删除。
 

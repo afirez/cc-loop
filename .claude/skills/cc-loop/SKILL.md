@@ -35,6 +35,8 @@ Load the relevant file on demand; do not read all of them at once:
 - X/Twitter listening (see the provenance note in the file): `references/loop-social.md`
 - Night audit and lesson promotion: `references/loop-night-audit.md`
 - Runtime, scheduling, and required tools: `references/loop-runtime.md`
+- Connectors and tool contract: `references/connectors.md`
+- Real surfaces to record: `references/verification-matrix.md`
 
 ## Optional tools
 
@@ -44,7 +46,7 @@ Promotion is agent work: read `LESSONS.md`, count `Seen` and distinct dates, and
 
 ## Verification environment (set up before the agent starts)
 
-Write down "what counts as a real run" in the Acceptance criteria of `docs/code-standards.md`: how to start, how to run tests, and which checks must actually be executed. Without acceptance criteria, do not let Loop 1 start merging PRs.
+Write down "what counts as a real run" in the Acceptance criteria of `docs/code-standards.md`: how to start, how to run tests, and which checks must actually be executed. Record the surfaces actually run in `references/verification-matrix.md`; a surface not run is `Not run`. Without acceptance criteria, do not let Loop 1 start merging PRs.
 
 ## Review gate
 

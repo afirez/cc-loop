@@ -19,9 +19,11 @@ Every item must be demonstrated before merging or releasing. Anything not run is
 5. **Source provenance**: each verbatim source block matches its cited screenshot; operational English is clearly separated from the verbatim block.
 6. **No runtime state**: `.omc/`, `.memsearch/`, `.omb/`, and local editor/OS files are not committed.
 7. **Record**: the change/PR states what was run, at which commit, and what was not run.
-8. **Package lint**: `sh .claude/skills/cc-loop/scripts/lint-package.sh` passes, and `.github/workflows/lint-package.yml` runs it on push/PR. This is a package lint, not a substitute for a target project's test suite.
+8. **Package tests/lint**: `sh tests/run.sh` and `sh .claude/skills/cc-loop/scripts/lint-package.sh` pass; `.github/workflows/test.yml` runs both on Ubuntu, macOS, and Windows. The lint is a package check, not a target project's test suite.
 9. **Review record / merge gate**: a merge uses `references/pr-review-record.md`, runs the checks on the reviewed head merged onto current `main`, and uses `--match-head-commit`; a review with no record is not a merge.
 10. **Release gate**: if this repo tags/releases, the tagged head had a green verification run; record what was run and do not move an older release to Latest.
+11. **Release workflow**: a `v*` tag runs tests and lint, packages the skill, and creates a GitHub release; a red tag produces no release.
+12. **Surface record**: `references/verification-matrix.md` records which real surfaces ran; a surface not run is `Not run`.
 
 ## Product decisions (human-owned)
 

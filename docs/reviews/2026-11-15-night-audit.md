@@ -29,6 +29,10 @@
 - Label a reimplementation as a reimplementation; name the upstream analog.
 - Prefer native commands over wrappers for one-command jobs.
 - Promotion is an agent judgment, not a script.
+- A checker's test suite needs broken fixtures, not only a valid one.
+- A 3-OS matrix on a shell tool catches portability assumptions.
+- A release workflow is a gate, not a tag button.
+- A connector contract is not a connector.
 
 ## Promotion
 

@@ -20,12 +20,18 @@ This repository also dogfoods the method on itself: `CLAUDE.md`, `AGENTS.md`, `L
 │   │   ├── subsystems-template.md   # subsystem reference + verification
 │   │   ├── pr-review-record.md      # reviewed head / Red check / Not run
 │   │   ├── loop-runtime.md          # scheduling + tool contract
+│   │   ├── connectors.md            # GitHub/Discord/X tool contract
+│   │   ├── verification-matrix.md   # real surfaces to record
 │   │   ├── loop-github.md           # Loop 1: GitHub + Discord
 │   │   ├── loop-social.md           # Loop 2: X/Twitter
 │   │   └── loop-night-audit.md      # Loop 3: night audit
 │   └── scripts/
 │       └── lint-package.sh          # package lint, not project verification
-├── .github/workflows/lint-package.yml  # CI runs lint-package.sh
+├── .github/
+│   ├── workflows/test.yml           # 3-OS package tests + lint
+│   ├── workflows/release.yml        # tag -> tests -> package -> release
+│   └── ISSUE_TEMPLATE/              # bug/feature intake
+├── tests/run.sh                     # fixture-based package tests
 ├── CLAUDE.md                        # dogfood: @AGENTS.md + @LESSONS.md
 ├── AGENTS.md                        # dogfood: task routing
 ├── LESSONS.md                       # dogfood: real lessons from this repo
@@ -36,6 +42,8 @@ This repository also dogfoods the method on itself: `CLAUDE.md`, `AGENTS.md`, `L
 Each Loop file contains the **verbatim Chinese source prompt** recovered from yetone's X screenshots, plus an **English operational version** and its provenance.
 
 The only helper script is `scripts/lint-package.sh`, a package-level lint for this skill. It is not Magpie's verification: Magpie verifies with `test.yml`, `make test` / `make test-ui`, `build/race-shards.sh`, and real machines. Night-audit collection and reviewed-head merges use native `git` / `gh` commands, documented in the loop files.
+
+`tests/run.sh` tests the lint against good and broken fixtures. `.github/workflows/test.yml` runs it on Ubuntu, macOS, and Windows; `.github/workflows/release.yml` runs it on a `v*` tag before packaging a release.
 
 ## Install
 
@@ -113,9 +121,10 @@ In a Claude Code session, run `/skills` or ask "What skills are available?" and 
 
    Move a rule into `docs/code-standards.md` when it has `Seen >= 3` on 3 distinct dates, and mark it promoted. No scanner script is required.
 
-7. Run the package lint and use native commands for the rest:
+7. Run the package tests and lint, then use native commands for the rest:
 
    ```bash
+   sh tests/run.sh
    sh .claude/skills/cc-loop/scripts/lint-package.sh
 
    # night-audit input
@@ -172,8 +181,9 @@ No Node or Python runtime is required by the skill itself.
 
 ## Status and limitations
 
-- Skill validation passes; `lint-package.sh` and the CI workflow run the package lint; promotion is agent-read (`LESSONS.md` + `Seen`/dates), with no scanner script.
-- **Not included:** a scheduler, GitHub/Discord/X connectors, target-project CI/hooks, and plugin/marketplace packaging.
+- Skill validation passes; `lint-package.sh` and the CI workflow run the package lint; `tests/run.sh` covers the lint's fixtures on three OSes; promotion is agent-read (`LESSONS.md` + `Seen`/dates), with no scanner script.
+- **Release:** a `v*` tag runs the tests, packages the skill as `.tar.gz`/`.zip` with `SHA256SUMS`, and creates a GitHub release; it is not Magpie's signing/notarization pipeline.
+- **Not included:** a scheduler, real GitHub/Discord/X connectors, target-project CI/hooks, plugin/marketplace packaging, and real machines.
 - The Loops are executed by Claude Code when invoked; they are not a background service.
 
 ## License

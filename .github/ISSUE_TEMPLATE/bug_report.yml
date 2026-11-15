@@ -1,0 +1,50 @@
+name: Bug report
+description: Something in cc-loop doesn't work as expected
+labels: [bug]
+body:
+  - type: input
+    id: version
+    attributes:
+      label: cc-loop version or commit
+      placeholder: v0.1.0 / 6a1f26a
+    validations:
+      required: true
+  - type: dropdown
+    id: surface
+    attributes:
+      label: Where
+      options: [initialization, Loop 1 GitHub/Discord, Loop 2 X, Loop 3 night audit, package lint, docs]
+    validations:
+      required: true
+  - type: input
+    id: os
+    attributes:
+      label: OS
+      placeholder: macOS 26 / Windows 11 (Git Bash) / Ubuntu 24.04
+    validations:
+      required: true
+  - type: input
+    id: claude
+    attributes:
+      label: Claude Code version
+      placeholder: 2.1.311
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1.
+        2.
+        3.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior and logs
