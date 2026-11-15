@@ -143,7 +143,10 @@ No Node or Python runtime is required by the skill itself.
 - Skill validation passes; the promotion scanner has fixture tests and is read-only.
 - **Not included:** a scheduler, GitHub/Discord/X connectors, hard enforcement hooks, and plugin/marketplace packaging.
 - The Loops are executed by Claude Code when invoked; they are not a background service.
-- No license file is included yet; add one before redistributing.
+
+## License
+
+MIT — see [LICENSE](LICENSE).
 
 ## Contributing
 
