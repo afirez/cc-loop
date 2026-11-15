@@ -40,6 +40,10 @@ Given one tweet, answer only JSON:
 "actionable_feedback" means a reproducible bug, a concrete suggestion, or a concrete request.
 ```
 
+## Runtime
+
+If X access or a filter is unavailable, mark the round `Not run`; see `references/loop-runtime.md`. Never send the full stream to the main model as a fallback.
+
 ## Constraints
 
 - This Skill does not bind to a specific classifier model. Implement the filter layer with the user's own toolchain, but **never skip filtering and hand everything to the main model**.

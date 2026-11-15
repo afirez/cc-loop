@@ -16,11 +16,19 @@ This repository also dogfoods the method on itself: `CLAUDE.md`, `AGENTS.md`, `L
 │   │   ├── agents-template.md       # AGENTS.md + two-line CLAUDE.md
 │   │   ├── lessons-format.md        # LESSONS.md format + promotion rule
 │   │   ├── code-standards-template.md
+│   │   ├── contributors-template.md # community PR harm/close/blocklist
+│   │   ├── subsystems-template.md   # subsystem reference + verification
+│   │   ├── pr-review-record.md      # reviewed head / Red check / Not run
+│   │   ├── loop-runtime.md          # scheduling + tool contract
 │   │   ├── loop-github.md           # Loop 1: GitHub + Discord
 │   │   ├── loop-social.md           # Loop 2: X/Twitter
 │   │   └── loop-night-audit.md      # Loop 3: night audit
 │   └── scripts/
-│       └── check-lessons-promotion.sh
+│       ├── check-lessons-promotion.sh
+│       ├── verify.sh                # executable acceptance gate
+│       ├── collect-day.sh           # night-audit input collector
+│       └── merge-reviewed.sh        # reviewed-head merge gate
+├── .github/workflows/verify.yml     # CI runs verify.sh
 ├── CLAUDE.md                        # dogfood: @AGENTS.md + @LESSONS.md
 ├── AGENTS.md                        # dogfood: task routing
 ├── LESSONS.md                       # dogfood: real lessons from this repo
@@ -84,10 +92,13 @@ In a Claude Code session, run `/skills` or ask "What skills are available?" and 
    - `AGENTS.md` with the task routing table
    - `LESSONS.md`
    - `docs/code-standards.md` with hard rules, Acceptance criteria, and the product-decision rule
+   - `docs/contributors.md` from `contributors-template.md`
+   - `docs/subsystems/README.md` plus the first subsystem page from `subsystems-template.md`
 4. Configure the three Loops. Load only the file you need:
    - `.claude/skills/cc-loop/references/loop-github.md`
    - `.claude/skills/cc-loop/references/loop-social.md`
    - `.claude/skills/cc-loop/references/loop-night-audit.md`
+   - `.claude/skills/cc-loop/references/loop-runtime.md` (scheduling and tool contract)
 5. Schedule a loop with Claude Code `/loop`, cron, or CI. Example shape:
 
    ```text
@@ -102,6 +113,16 @@ In a Claude Code session, run `/skills` or ask "What skills are available?" and 
    ```
 
    The scan is read-only. It prints entries with `Seen >= 3` and at least 3 distinct dates; a missing file exits with code 2.
+
+7. Run the executable gate and the review helpers:
+
+   ```bash
+   sh .claude/skills/cc-loop/scripts/verify.sh
+   sh .claude/skills/cc-loop/scripts/collect-day.sh "24 hours ago"
+   sh .claude/skills/cc-loop/scripts/merge-reviewed.sh <pr> <reviewed-sha>
+   ```
+
+   `verify.sh` runs the package checks; `.github/workflows/verify.yml` runs it on push/PR. `collect-day.sh` gathers night-audit input and marks PRs `Not run` without `gh`. `merge-reviewed.sh` refuses if the PR head moved.
 
 ## The three Loops
 
@@ -122,13 +143,18 @@ The method's gate is in `docs/code-standards.md`:
 - mark every check that was not run as `Not run`;
 - record what was run, at which head, and what was not run.
 
-The skill **instructs** this; it does not enforce it with hooks or CI. Add your own pre-push/CI checks if you need a hard gate.
+The skill **instructs** this, and the skill package's own gate is executable:
+
+- `sh .claude/skills/cc-loop/scripts/verify.sh` (also run by `.github/workflows/verify.yml`)
+- `scripts/merge-reviewed.sh` or `--match-head-commit` for the merge.
+
+Target-project CI and hooks remain yours to wire. The skill does not enforce another project's verification.
 
 ## Requirements
 
 - Claude Code with Agent Skills support; `claude plugin validate` needs v2.1.233+.
 - `sh` + POSIX `awk` for the scanner (Git Bash on Windows).
-- Optional, for actual loop execution: `gh` or an MCP GitHub server, a Discord bot, an X API/collector, and a cheap classifier (or a keyword/embedding fallback).
+- Optional, for actual loop execution: `gh` or an MCP GitHub server, a Discord bot, an X API/collector, and a cheap classifier (or a keyword/embedding fallback). `collect-day.sh` and `merge-reviewed.sh` use `gh` when available and mark `Not run` otherwise.
 
 No Node or Python runtime is required by the skill itself.
 
@@ -140,8 +166,8 @@ No Node or Python runtime is required by the skill itself.
 
 ## Status and limitations
 
-- Skill validation passes; the promotion scanner has fixture tests and is read-only.
-- **Not included:** a scheduler, GitHub/Discord/X connectors, hard enforcement hooks, and plugin/marketplace packaging.
+- Skill validation passes; `verify.sh` and the CI workflow run the package gate; the promotion scanner has fixture tests and is read-only.
+- **Not included:** a scheduler, GitHub/Discord/X connectors, target-project CI/hooks, and plugin/marketplace packaging.
 - The Loops are executed by Claude Code when invoked; they are not a background service.
 
 ## License

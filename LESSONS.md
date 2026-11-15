@@ -61,3 +61,43 @@ This is the Magpie-style method applied to `cc-loop` itself: each change is revi
 **Seen 1×** (2026-11-15)
 
 **Scope**: Any change that can alter metadata, generated text, or measured values.
+
+## Rule: A skill that routes to a document it does not template is incomplete.
+
+**Why**: `SKILL.md` and `AGENTS.md` routed to `docs/contributors.md` and `docs/subsystems/`, but the skill package had no templates for either. A target project would be told to create files it had no model for.
+
+**Evidence**: `.claude/skills/cc-loop/references/contributors-template.md` and `subsystems-template.md` added; `SKILL.md` initialization step updated.
+
+**Seen 1×** (2026-11-15)
+
+**Scope**: Any skill whose routing table points outside the skill package.
+
+## Rule: A documented acceptance criterion without an executable check is not a gate.
+
+**Why**: The first version of `docs/code-standards.md` listed checks in prose only. Nothing stopped a broken reference or a stale frontmatter from being pushed. Magpie's behavior chain has CI and merge gates; the skill had text.
+
+**Evidence**: `.claude/skills/cc-loop/scripts/verify.sh`; `.github/workflows/verify.yml`; acceptance criteria 8–9; `docs/reviews/2026-11-15-loop1.md` second pass.
+
+**Seen 1×** (2026-11-15)
+
+**Scope**: Any method that claims a verification gate.
+
+## Rule: A runtime contract is part of the method; prompts alone do not schedule or connect.
+
+**Why**: The three loop prompts say what to do, but not how often, with which tools, or what happens when a tool is missing. Magpie's night-audit trigger and connectors are not in its repo; the skill must state that boundary.
+
+**Evidence**: `.claude/skills/cc-loop/references/loop-runtime.md`; `loop-night-audit.md` scheduling section; `loop-github.md` preconditions.
+
+**Seen 1×** (2026-11-15)
+
+**Scope**: Any skill that describes scheduled or externally connected work.
+
+## Rule: A missing optional tool degrades to `Not run`, never to a silent pass.
+
+**Why**: `verify.sh` may run without the Claude CLI; `collect-day.sh` and `merge-reviewed.sh` may run without `gh`. A silent pass would turn an unverified surface into a false green.
+
+**Evidence**: `verify.sh` prints `NOT RUN claude plugin validate`; `collect-day.sh` prints `Not run: gh not found`; `merge-reviewed.sh` exits 2.
+
+**Seen 1×** (2026-11-15)
+
+**Scope**: Any check that depends on an optional external tool.

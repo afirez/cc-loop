@@ -8,6 +8,10 @@
 
 Source: screenshot "yetone 分享的第三条 loop 提示词" — `https://mmbiz.qpic.cn/sz_mmbiz_png/VIP3SyzHHZ9iafX7DPib42E1nxfVkSYXlPrR152ytkGD1v7A5GhribDh9HGvVUPWf98pI0nMayClvKORbichVQnF21OqvMGr4VticeTGhg6jB7Do/0?wx_fmt=png`; original X post: `https://x.com/yetone/status/2109855710444237018` (now protected).
 
+## Collect
+
+Run `scripts/collect-day.sh` (read-only) to gather the day's commits, tags, and merged PRs. If `gh` is missing, PRs are `Not run`; do not invent them.
+
 ## Each round
 
 Context: the project is fully automated in changing code and merging community PRs. This loop is the brake.
@@ -25,6 +29,10 @@ For each problem:
 - If a lesson reaches `Seen 3` and comes from reviews on 3 different dates, move it into `docs/code-standards.md` and mark it as promoted in `LESSONS.md`.
 - Clean up clearly low-quality or malicious code so the project does not become unmaintainable or rot.
 - Record contributors who repeatedly submit low-quality PRs on the blocklist (`docs/contributors.md`).
+
+## Scheduling
+
+Choose `/loop`, cron, CI, or manual. Magpie's own trigger is not in its repository, so there is no upstream schedule to copy. Record which one you use; see `references/loop-runtime.md`. Do not claim a nightly audit ran without a record.
 
 ## Promotion judgment (hard)
 

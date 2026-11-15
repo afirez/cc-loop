@@ -6,6 +6,7 @@ These rules come from lessons promoted after repeated incidents. Every PR review
 
 1. **A PR that was not actually run must not be merged.** The reviewer pulls the branch locally and runs it; a PR whose tests cannot be shown to have run is treated as unverified.
 2. **Checks that were not run must be marked `Not run`.** "Looks fine" is not a substitute for actual verification.
+3. **A merge records the reviewed head.** Write the record in `references/pr-review-record.md`; merge at that head with `--match-head-commit` (or `scripts/merge-reviewed.sh`). A merge with no record of what was run cannot be checked afterwards.
 
 ## Acceptance criteria (what counts as a real run)
 
@@ -19,6 +20,18 @@ Every item must be demonstrated before merging or releasing. Anything not run is
 ## Product decisions (human-owned)
 
 - **Do not reverse deliberate decisions.** Interaction, visuals, defaults, and other product decisions belong to the maintainer; a PR may propose, not change them.
+
+## Human gates
+
+- **Security/harm**: see `docs/contributors.md`; a harm-stop waits for the maintainer.
+- **Physical environment**: the human sets up real machines/accounts; a check that cannot run is `Not run`.
+- **UI/UX**: the human owns taste; the agent proposes.
+
+## Release gate
+
+- Tag/release only after the verification run at the tagged commit is green; a run cancelled by the next push is not a pass.
+- Record what was run at the tagged head; do not move an older release to Latest.
+- If the project has no release process, say so; do not invent one.
 
 ## Maintenance
 

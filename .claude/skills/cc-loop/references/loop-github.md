@@ -13,6 +13,7 @@ Source: screenshot "yetone 分享的第一条 loop 提示词" in the AI智见录
 - `docs/code-standards.md` must exist, and its Acceptance criteria must define "what counts as a real run". Without acceptance criteria, this Loop must not start merging PRs.
 - A PR whose tests were not actually run must not be merged; treat it as unverified, reply with the reason, and close it.
 - Checks that were not run must be marked `Not run`; "looks fine" is not a substitute for actual verification.
+- If GitHub, Discord, or the local run environment is unavailable, mark that surface `Not run`; do not merge a PR you could not run. See `references/loop-runtime.md`.
 
 ## Each round
 
@@ -29,5 +30,7 @@ Source: screenshot "yetone 分享的第一条 loop 提示词" in the AI智见录
 6. For "relay service" advertising, reply with the project's preset message (“感谢关注，日后会出相关合作方案，敬请期待” in the source prompt); never add a third-party relay to the product.
 
 ## Record
+
+Before merging, write the review record from `references/pr-review-record.md`: reviewed head, harm check, what was run, Red check, Break check, and `Not run`. Merge at that head with `scripts/merge-reviewed.sh <pr> <sha>` (requires `gh`) or `gh pr merge --match-head-commit <sha>`.
 
 At the end of each round, record what was handled and the evidence (links, run-output summary). If a lesson is involved, write it into `LESSONS.md` using the format in this Skill's `references/lessons-format.md`.

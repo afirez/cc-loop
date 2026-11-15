@@ -9,4 +9,5 @@ Before starting any work, read the documents that match the task type. The routi
 | Reviewing a community PR | `docs/contributors.md` |
 | Deciding whether feedback is worth acting on / product boundary | The product-decision rule in `docs/code-standards.md` |
 | Verifying a change is complete | The Acceptance criteria in `docs/code-standards.md` |
+| Running or scheduling a loop | `.claude/skills/cc-loop/references/loop-runtime.md` |
 | After any rework or failure | `LESSONS.md` |

@@ -9,6 +9,7 @@ Before starting any work, read the documents that match the task type. The routi
 | Reviewing a community PR | `docs/contributors.md` |
 | Deciding whether feedback is worth acting on / product boundary | The product-decision rule in `docs/code-standards.md` ("Don't reverse deliberate decisions") |
 | Verifying a fix is complete | The Acceptance criteria in `docs/code-standards.md`, plus the verification commands in the matching `docs/subsystems/` page |
+| Running or scheduling a loop | The installed skill's `references/loop-runtime.md` |
 | After any rework or failure | `LESSONS.md` (lessons already learned) |
 
 ## Initialization instructions for the agent (do not write this section into AGENTS.md)

@@ -318,6 +318,21 @@ description: 用 Magpie 的负反馈闭环让 Claude Code 持续维护项目。�
 
 **溯源限制**：yetone 原 X 帖已 protected（fxtwitter 返回 `PRIVATE_TWEET`）；三张截图是第三方文章的复现，无法与受保护原帖做独立逐字比对。如后续取得原帖，应以原帖复核。仓库规则会随 `main` 变化；本矩阵固定在上面的 SHA。
 
+### 6.6 Magpie 行为链路内化的偏差项（2026-11-15）
+
+| Magpie 行为 | cc-loop 原先 | 已内化 |
+|---|---|---|
+| CI 三端矩阵 / PR 校验 | 无 | `scripts/verify.sh` + `.github/workflows/verify.yml` |
+| PR 审查记录（Red check / Break check / Not run） | 只有 prompt | `references/pr-review-record.md`；`scripts/merge-reviewed.sh` |
+| 社区 PR 危害/关闭/黑名单模板 | 路由到 `docs/contributors.md`，但无模板 | `references/contributors-template.md` |
+| 子系统 reference / 验证命令模板 | 路由到 `docs/subsystems/`，但无模板 | `references/subsystems-template.md` |
+| 夜审数据收集 | 只有 prompt | `scripts/collect-day.sh`（无 `gh` 时 PR 标 `Not run`） |
+| 调度与工具契约 | 只有 prompt | `references/loop-runtime.md` |
+| 发布门禁（tag 前 CI 绿、记录 head、Latest） | 未写 | `code-standards-template.md` 的 Release gate |
+| 人的安全/物理/UI 闸门 | 部分写在原则 | `code-standards-template.md` 的 Human gates + `contributors-template.md` |
+
+**仍未内化（需要在目标项目或用户工具链里接）**：`/loop`/cron/CI 调度器、GitHub/Discord/X 连接器、目标项目的 CI/hook、plugin/marketplace 打包、真实三端真机。`cc-loop` 现在有**可执行的包级验收门禁**，但没有 Magpie 那样的完整运行基础设施。
+
 ---
 
 这份 `HANDOFF.md` 已把 Skill 名统一为 **`cc-loop`**，目录、frontmatter `name`、触发词和测试指令全部对齐。下一个 Claude Code 会话可以直接从 **§4 实施步骤**开始，第一步就是创建 `.claude/skills/cc-loop/` 并写入 `SKILL.md`。
