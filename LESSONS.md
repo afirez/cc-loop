@@ -214,9 +214,9 @@ This is the Magpie-style method applied to `cc-loop` itself: each change is revi
 
 ## Rule: Keep review records where the review happens, not in a parallel docs tree.
 
-**Why**: Magpie has no `docs/reviews/`; its records are PR comments and commit bodies. `docs/reviews/` here is a dogfood addition for a single-author repo without PRs. A target project should post the record on the PR, not invent a parallel tree.
+**Why**: Magpie has no `docs/reviews/`; its records are PR comments and commit bodies. A solo repository can use PRs too; direct-to-main was a choice, not a constraint. cc-loop now uses the maintainer PR flow, and `docs/reviews/` is legacy.
 
-**Evidence**: Magpie `docs/` listing; `docs/code-standards.md` ("Write on the PR what was run"); PR #1339; `docs/reviews/README.md`.
+**Evidence**: Magpie `docs/` listing; `docs/code-standards.md` ("Write on the PR what was run"); PR #1339; `docs/contributors.md`; `docs/reviews/README.md`.
 
 **Seen 1×** (2026-11-15)
 

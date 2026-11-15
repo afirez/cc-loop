@@ -42,7 +42,7 @@
 ## State
 
 - No persistent state in the package. `LESSONS.md` and `docs/` live in the target project, not here.
-- This repository is dogfooded: the root `LESSONS.md` and `docs/` are the method applied to this project. `docs/reviews/` is a dogfood-only local record; the skill's review record goes on the PR.
+- This repository is dogfooded: the root `LESSONS.md` and `docs/` are the method applied to this project. It now uses the maintainer PR flow; `docs/reviews/` is legacy.
 
 ## Verification commands
 
