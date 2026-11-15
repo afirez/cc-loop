@@ -35,5 +35,5 @@ Result: no candidates. All lessons are `Seen 1×` on one date; promotion needs 3
 
 ## Follow-ups
 
-- Add a README/install section and decide whether to package as a plugin.
+- ~~Add a README/install section~~ (done); decide whether to package as a plugin.
 - Run a real end-to-end loop with a scheduler and connectors before claiming the loops are operational.
