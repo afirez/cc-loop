@@ -9,7 +9,7 @@
 
 1. **Rework**: `docs/product.md` and `docs/verification.md` were invented, then removed; the three loop prompts were first marked unsourced, then recovered verbatim from screenshots; the skill routed to contributors/subsystems docs it did not template.
 2. **Should not have merged**: none; the repository was created from a single reviewed commit.
-3. **Thin verification**: the first acceptance criteria were prose-only and nothing executed them. `verify.sh` + `.github/workflows/verify.yml` now run the package checks. Real loop execution with a scheduler and external connectors is still `Not run`.
+3. **Thin verification**: the first acceptance criteria were prose-only and nothing executed them. `lint-package.sh` + `.github/workflows/lint-package.yml` now run the package lint. Real loop execution with a scheduler and external connectors is still `Not run`. The `collect-day.sh` / `merge-reviewed.sh` wrappers were removed in favor of native `git`/`gh` commands.
 
 ## Lessons written
 
@@ -27,6 +27,7 @@
 - A missing optional tool degrades to `Not run`, never to a silent pass.
 - Review the merged result, not only the PR head.
 - Label a reimplementation as a reimplementation; name the upstream analog.
+- Prefer native commands over wrappers for one-command jobs.
 
 ## Promotion
 
@@ -41,7 +42,7 @@ Result: no candidates. All lessons are `Seen 1×` on one date; promotion needs 3
 
 ## Follow-ups
 
-- ~~Add a README/install section~~ (done); ~~add contributors/subsystems templates and an executable verify gate~~ (done).
+- ~~Add a README/install section~~ (done); ~~add contributors/subsystems templates and a package lint + CI~~ (done); ~~replace the two wrappers with native commands~~ (done).
 - ~~Add a runtime contract~~ (done: `loop-runtime.md`).
 - Decide whether to package as a plugin.
 - Run a real end-to-end loop with a scheduler and connectors before claiming the loops are operational.

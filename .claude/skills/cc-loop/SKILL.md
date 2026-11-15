@@ -38,10 +38,8 @@ Load the relevant file on demand; do not read all of them at once:
 
 ## Optional tools
 
-- `scripts/verify.sh`: executable acceptance checks for the skill package (frontmatter, reference integrity, no runtime state, scanner fixtures, optional `claude plugin validate`). Run it before every change.
+- `scripts/lint-package.sh`: package-level lint (frontmatter, reference integrity, no runtime state, scanner fixtures, optional `claude plugin validate`). This is not Magpie's verification; the target project's test suite/CI remains the verification. Run it before every change.
 - `scripts/check-lessons-promotion.sh [LESSONS.md]`: read-only scan for entries that meet "Seen ≥ 3 and at least 3 distinct dates" and print promotion candidates.
-- `scripts/collect-day.sh [since] [repo]`: read-only night-audit input collector; marks PRs `Not run` when `gh` is unavailable.
-- `scripts/merge-reviewed.sh <pr> <sha>`: merge only at the reviewed head; refuses if the PR head moved (requires `gh`).
 
 ## Verification environment (set up before the agent starts)
 
@@ -49,7 +47,7 @@ Write down "what counts as a real run" in the Acceptance criteria of `docs/code-
 
 ## Review gate
 
-Before merging, write the record in `references/pr-review-record.md`: reviewed head, harm check, what was run, Red check, Break check, and `Not run`. Merge at that head with `scripts/merge-reviewed.sh <pr> <sha>` (requires `gh`) or `gh pr merge --match-head-commit <sha>`.
+Before merging, write the record in `references/pr-review-record.md`: reviewed head, harm check, what was run, Red check, Break check, and `Not run`. Check the head with `gh pr view <pr> --json headRefOid`, then merge with `gh pr merge <pr> --match-head-commit <sha>`.
 
 ## Human boundary
 

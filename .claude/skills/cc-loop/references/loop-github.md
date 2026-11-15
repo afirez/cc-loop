@@ -32,6 +32,6 @@ Source: screenshot "yetone 分享的第一条 loop 提示词" in the AI智见录
 
 ## Record
 
-Before merging, write the review record from `references/pr-review-record.md`: reviewed head, harm check, what was run, Red check, Break check, and `Not run`. Merge at that head with `scripts/merge-reviewed.sh <pr> <sha>` (requires `gh`) or `gh pr merge --match-head-commit <sha>`.
+Before merging, write the review record from `references/pr-review-record.md`: reviewed head, harm check, what was run, Red check, Break check, and `Not run`. Check the head with `gh pr view <pr> --json headRefOid`, then merge with `gh pr merge <pr> --match-head-commit <sha>`; the merge refuses if the head moved.
 
 At the end of each round, record what was handled and the evidence (links, run-output summary). If a lesson is involved, write it into `LESSONS.md` using the format in this Skill's `references/lessons-format.md`.

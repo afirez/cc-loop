@@ -25,10 +25,8 @@ This repository also dogfoods the method on itself: `CLAUDE.md`, `AGENTS.md`, `L
 │   │   └── loop-night-audit.md      # Loop 3: night audit
 │   └── scripts/
 │       ├── check-lessons-promotion.sh
-│       ├── verify.sh                # executable acceptance gate
-│       ├── collect-day.sh           # night-audit input collector
-│       └── merge-reviewed.sh        # reviewed-head merge gate
-├── .github/workflows/verify.yml     # CI runs verify.sh
+│       └── lint-package.sh          # package lint, not project verification
+├── .github/workflows/lint-package.yml  # CI runs lint-package.sh
 ├── CLAUDE.md                        # dogfood: @AGENTS.md + @LESSONS.md
 ├── AGENTS.md                        # dogfood: task routing
 ├── LESSONS.md                       # dogfood: real lessons from this repo
@@ -38,7 +36,7 @@ This repository also dogfoods the method on itself: `CLAUDE.md`, `AGENTS.md`, `L
 
 Each Loop file contains the **verbatim Chinese source prompt** recovered from yetone's X screenshots, plus an **English operational version** and its provenance.
 
-The three helper scripts are cc-loop implementations, not files copied from Magpie. Magpie's analogs are its CI workflow (`test.yml`), `make test` / `make test-ui`, `build/race-shards.sh`, and the documented `gh pr merge --match-head-commit` command; its night-audit collection is not in the repository.
+The only helper script is `scripts/lint-package.sh`, a package-level lint for this skill. It is not Magpie's verification: Magpie verifies with `test.yml`, `make test` / `make test-ui`, `build/race-shards.sh`, and real machines. Night-audit collection and reviewed-head merges use native `git` / `gh` commands, documented in the loop files.
 
 ## Install
 
@@ -116,15 +114,21 @@ In a Claude Code session, run `/skills` or ask "What skills are available?" and 
 
    The scan is read-only. It prints entries with `Seen >= 3` and at least 3 distinct dates; a missing file exits with code 2.
 
-7. Run the executable gate and the review helpers:
+7. Run the package lint and use native commands for the rest:
 
    ```bash
-   sh .claude/skills/cc-loop/scripts/verify.sh
-   sh .claude/skills/cc-loop/scripts/collect-day.sh "24 hours ago"
-   sh .claude/skills/cc-loop/scripts/merge-reviewed.sh <pr> <reviewed-sha>
+   sh .claude/skills/cc-loop/scripts/lint-package.sh
+
+   # night-audit input
+   git log --since="24 hours ago" --date=short --pretty=format:'- %h %ad %s'
+   gh pr list --state merged --limit 50 --json number,title,headRefOid,mergedAt
+
+   # reviewed-head merge
+   gh pr view <pr> --json headRefOid
+   gh pr merge <pr> --match-head-commit <reviewed-sha>
    ```
 
-   `verify.sh` runs the package checks; `.github/workflows/verify.yml` runs it on push/PR. `collect-day.sh` gathers night-audit input and marks PRs `Not run` without `gh`. `merge-reviewed.sh` refuses if the PR head moved.
+   `lint-package.sh` checks the skill package; `.github/workflows/lint-package.yml` runs it on push/PR. Night-audit collection and the merge gate are native commands; do not invent PR data when `gh` is unavailable.
 
 ## The three Loops
 
@@ -148,8 +152,8 @@ The method's gate is in `docs/code-standards.md`:
 
 The skill **instructs** this, and the skill package's own gate is executable:
 
-- `sh .claude/skills/cc-loop/scripts/verify.sh` (also run by `.github/workflows/verify.yml`)
-- `scripts/merge-reviewed.sh` or `--match-head-commit` for the merge.
+- `sh .claude/skills/cc-loop/scripts/lint-package.sh` (package lint; also run by `.github/workflows/lint-package.yml`)
+- native `gh pr merge --match-head-commit` for the merge.
 
 Target-project CI and hooks remain yours to wire. The skill does not enforce another project's verification.
 
@@ -157,7 +161,7 @@ Target-project CI and hooks remain yours to wire. The skill does not enforce ano
 
 - Claude Code with Agent Skills support; `claude plugin validate` needs v2.1.233+.
 - `sh` + POSIX `awk` for the scanner (Git Bash on Windows).
-- Optional, for actual loop execution: `gh` or an MCP GitHub server, a Discord bot, an X API/collector, and a cheap classifier (or a keyword/embedding fallback). `collect-day.sh` and `merge-reviewed.sh` use `gh` when available and mark `Not run` otherwise.
+- Optional, for actual loop execution: `gh` or an MCP GitHub server, a Discord bot, an X API/collector, and a cheap classifier (or a keyword/embedding fallback). The native `gh` commands mark `Not run` when `gh` is unavailable.
 
 No Node or Python runtime is required by the skill itself.
 
@@ -169,7 +173,7 @@ No Node or Python runtime is required by the skill itself.
 
 ## Status and limitations
 
-- Skill validation passes; `verify.sh` and the CI workflow run the package gate; the promotion scanner has fixture tests and is read-only.
+- Skill validation passes; `lint-package.sh` and the CI workflow run the package lint; the promotion scanner has fixture tests and is read-only.
 - **Not included:** a scheduler, GitHub/Discord/X connectors, target-project CI/hooks, and plugin/marketplace packaging.
 - The Loops are executed by Claude Code when invoked; they are not a background service.
 

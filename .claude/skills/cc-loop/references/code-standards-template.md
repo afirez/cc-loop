@@ -6,7 +6,7 @@ These rules come from lessons promoted after repeated incidents. Every PR review
 
 1. **A PR that was not actually run must not be merged.** The reviewer pulls the branch locally and runs it; a PR whose tests cannot be shown to have run is treated as unverified.
 2. **Checks that were not run must be marked `Not run`.** "Looks fine" is not a substitute for actual verification.
-3. **A merge records the reviewed head.** Write the record in `references/pr-review-record.md`; merge at that head with `--match-head-commit` (or `scripts/merge-reviewed.sh`). A merge with no record of what was run cannot be checked afterwards.
+3. **A merge records the reviewed head.** Write the record in `references/pr-review-record.md`; merge at that head with `--match-head-commit`. A merge with no record of what was run cannot be checked afterwards.
 
 ## Acceptance criteria (what counts as a real run)
 

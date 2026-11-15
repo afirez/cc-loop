@@ -76,7 +76,7 @@ This is the Magpie-style method applied to `cc-loop` itself: each change is revi
 
 **Why**: The first version of `docs/code-standards.md` listed checks in prose only. Nothing stopped a broken reference or a stale frontmatter from being pushed. Magpie's behavior chain has CI and merge gates; the skill had text.
 
-**Evidence**: `.claude/skills/cc-loop/scripts/verify.sh`; `.github/workflows/verify.yml`; acceptance criteria 8–9; `docs/reviews/2026-11-15-loop1.md` second pass.
+**Evidence**: `.claude/skills/cc-loop/scripts/lint-package.sh`; `.github/workflows/lint-package.yml`; acceptance criteria 8–9; `docs/reviews/2026-11-15-loop1.md` second pass.
 
 **Seen 1×** (2026-11-15)
 
@@ -94,9 +94,9 @@ This is the Magpie-style method applied to `cc-loop` itself: each change is revi
 
 ## Rule: A missing optional tool degrades to `Not run`, never to a silent pass.
 
-**Why**: `verify.sh` may run without the Claude CLI; `collect-day.sh` and `merge-reviewed.sh` may run without `gh`. A silent pass would turn an unverified surface into a false green.
+**Why**: `lint-package.sh` may run without the Claude CLI; native `gh` commands may fail when `gh` is missing or unauthenticated. A silent pass would turn an unverified surface into a false green.
 
-**Evidence**: `verify.sh` prints `NOT RUN claude plugin validate`; `collect-day.sh` prints `Not run: gh not found`; `merge-reviewed.sh` exits 2.
+**Evidence**: `lint-package.sh` prints `NOT RUN claude plugin validate`; the native `gh pr list` / `gh pr merge` commands are marked `Not run` when `gh` is unavailable.
 
 **Seen 1×** (2026-11-15)
 
@@ -114,10 +114,20 @@ This is the Magpie-style method applied to `cc-loop` itself: each change is revi
 
 ## Rule: Label a reimplementation as a reimplementation; name the upstream analog.
 
-**Why**: `verify.sh`, `collect-day.sh`, and `merge-reviewed.sh` were described as "internalized" but are not files from Magpie. Magpie verifies through `test.yml` + `make test`/`make test-ui` + `build/race-shards.sh`, merges with a documented `gh pr merge --match-head-commit` command, and has no night-audit collection script.
+**Why**: `lint-package.sh` was described as "internalized" but is not a file from Magpie. Magpie verifies through `test.yml` + `make test`/`make test-ui` + `build/race-shards.sh`, merges with a documented `gh pr merge --match-head-commit` command, and has no night-audit collection script.
 
-**Evidence**: Magpie `test.yml`, `Makefile`, `build/race-shards.sh`, `docs/code-standards.md`; script headers updated; README/Handoff notes.
+**Evidence**: Magpie `test.yml`, `Makefile`, `build/race-shards.sh`, `docs/code-standards.md`; `lint-package.sh` header; README/Handoff notes.
 
 **Seen 1×** (2026-11-15)
 
 **Scope**: Any artifact that re-creates an upstream behavior.
+
+## Rule: Prefer native commands over wrappers for one-command jobs.
+
+**Why**: `collect-day.sh` and `merge-reviewed.sh` wrapped `git log` / `gh` commands that the agent can run directly. The wrappers added maintenance surface without adding verification. They were removed; the native commands live in `loop-runtime.md` and the loop files.
+
+**Evidence**: `loop-runtime.md` "Native commands first"; the commit that removed the wrappers.
+
+**Seen 1×** (2026-11-15)
+
+**Scope**: Any skill that wraps a single native command.

@@ -10,7 +10,15 @@ Source: screenshot "yetone 分享的第三条 loop 提示词" — `https://mmbiz
 
 ## Collect
 
-Run `scripts/collect-day.sh` (read-only) to gather the day's commits, tags, and merged PRs. If `gh` is missing, PRs are `Not run`; do not invent them.
+Gather the day's input with native commands (read-only):
+
+```sh
+git log --since="24 hours ago" --date=short --pretty=format:'- %h %ad %s'
+git for-each-ref --sort=-creatordate --count=20 --format='- %(refname:short) %(creatordate:short)' refs/tags
+gh pr list --state merged --limit 50 --json number,title,headRefOid,mergedAt
+```
+
+If `gh` is missing, PRs are `Not run`; do not invent them.
 
 ## Each round
 

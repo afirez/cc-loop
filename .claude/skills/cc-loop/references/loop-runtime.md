@@ -4,6 +4,16 @@ The three loop files are prompts. This file describes how to run them and what t
 
 Magpie's own repository does **not** contain the scheduler, the night-audit trigger, the agent choice, or the tool connectors. The source analysis says so explicitly; the `LESSONS.md` update times are irregular and no workflow runs the audit. Do not pretend a loop ran when it did not.
 
+## Native commands first
+
+Use the agent's own tools before adding a wrapper:
+
+- Night-audit input: `git log --since="24 hours ago" --date=short --pretty=format:'- %h %ad %s'`, `git for-each-ref ...`, `gh pr list --state merged --limit 50 ...`.
+- Reviewed-head merge: `gh pr view <pr> --json headRefOid`, then `gh pr merge <pr> --match-head-commit <sha>`.
+- Package lint: `scripts/lint-package.sh` — a package check, not the target project's test suite.
+
+The skill ships no `collect-day` or `merge-reviewed` wrappers; those jobs are one native command each.
+
 ## Scheduling
 
 | Option | How | Notes |

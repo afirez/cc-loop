@@ -1,11 +1,10 @@
 #!/usr/bin/env sh
-# verify.sh — executable acceptance checks for the cc-loop skill package.
-# Usage: sh verify.sh [repo-root]
+# lint-package.sh — package-level lint for the cc-loop skill package.
+# Usage: sh lint-package.sh [repo-root]
 # Exit codes: 0 all checks pass (Not run allowed); 1 one or more checks failed.
-# This script is read-only except for a temporary fixture directory.
-# cc-loop implementation, not a Magpie script. Magpie's analogs are
-# .github/workflows/test.yml, `make test` / `make test-ui`, and
-# build/race-shards.sh.
+# This is a package lint, not Magpie's verification. Magpie verifies with
+# .github/workflows/test.yml, `make test` / `make test-ui`, build/race-shards.sh,
+# and real machines. This script is read-only except for a temporary fixture.
 
 set -u
 
@@ -18,7 +17,7 @@ pass() { printf 'PASS %s\n' "$1"; }
 fail() { printf 'FAIL %s\n' "$1"; FAIL=$((FAIL + 1)); }
 notrun() { printf 'NOT RUN %s\n' "$1"; NOTRUN=$((NOTRUN + 1)); }
 
-echo "== cc-loop verification =="
+echo "== cc-loop package lint =="
 echo "root: $ROOT"
 
 # 1. Required files
@@ -35,9 +34,7 @@ for f in \
   references/loop-social.md \
   references/loop-night-audit.md \
   scripts/check-lessons-promotion.sh \
-  scripts/collect-day.sh \
-  scripts/merge-reviewed.sh \
-  scripts/verify.sh
+  scripts/lint-package.sh
 do
   if [ -f "$SKILL/$f" ]; then pass "exists $f"; else fail "missing $f"; fi
 done

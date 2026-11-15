@@ -4,8 +4,8 @@
 
 - `SKILL.md` routes Claude Code to the reference it needs; it does not duplicate the references.
 - `references/` holds the templates, the three loop prompts (verbatim Chinese source + English operational version), the review record, and the runtime contract.
-- `scripts/check-lessons-promotion.sh` scans a `LESSONS.md` and prints promotion candidates; `verify.sh` runs the package acceptance checks; `collect-day.sh` gathers night-audit input; `merge-reviewed.sh` merges only at the reviewed head.
-- `.github/workflows/verify.yml` runs `verify.sh` on push/PR.
+- `scripts/check-lessons-promotion.sh` scans a `LESSONS.md` and prints promotion candidates; `lint-package.sh` runs the package lint.
+- `.github/workflows/lint-package.yml` runs `lint-package.sh` on push/PR.
 - The package does not schedule loops, call GitHub/Discord/X APIs, or enforce another project's hooks. Those are the user's toolchain; the skill documents the requirements.
 
 ## Source of truth
@@ -20,7 +20,7 @@
 - Scheduling and tool contract: `references/loop-runtime.md`.
 - Loop prompts: `references/loop-github.md`, `loop-social.md`, `loop-night-audit.md`.
 - Candidate scanning: `scripts/check-lessons-promotion.sh`.
-- Executable gate: `scripts/verify.sh`; CI: `.github/workflows/verify.yml`.
+- Package lint: `scripts/lint-package.sh`; CI: `.github/workflows/lint-package.yml`.
 - Provenance and design record: `Handoff.md` §6.
 
 ## Runtime path
@@ -29,7 +29,7 @@
 2. `SKILL.md` sends the agent to one reference on demand.
 3. The agent creates the project skeleton (`CLAUDE.md`, `AGENTS.md`, `LESSONS.md`, `docs/...`) from the templates.
 4. The agent runs the loops and the scanner when the user's toolchain provides the required access.
-5. Before a change is pushed, `scripts/verify.sh` runs the package checks; CI runs the same script on push/PR.
+5. Before a change is pushed, `scripts/lint-package.sh` runs the package lint; CI runs the same script on push/PR.
 
 ## State
 
@@ -38,11 +38,10 @@
 
 ## Verification commands
 
-- `sh .claude/skills/cc-loop/scripts/verify.sh`
-- `claude plugin validate .claude/skills` (verify.sh runs it when `claude` is available; otherwise `Not run`)
+- `sh .claude/skills/cc-loop/scripts/lint-package.sh` (package lint; not the target project's test suite)
+- `claude plugin validate .claude/skills` (lint-package.sh runs it when `claude` is available; otherwise `Not run`)
 - `sh .claude/skills/cc-loop/scripts/check-lessons-promotion.sh LESSONS.md`
-- `sh .claude/skills/cc-loop/scripts/collect-day.sh "24 hours ago"`
-- `sh .claude/skills/cc-loop/scripts/merge-reviewed.sh <pr> <reviewed-sha>` (requires `gh`)
+- Native commands: `git log --since="24 hours ago" ...`; `gh pr list --state merged --limit 50 ...`; `gh pr view <pr> --json headRefOid`; `gh pr merge <pr> --match-head-commit <sha>`
 - Frontmatter check: `name` matches the directory; `description` within limits.
 - Reference integrity: every path in `SKILL.md` / `AGENTS.md` exists.
 
@@ -51,19 +50,18 @@
 - `SKILL.md` stays under 500 lines and routes only; references are one level deep.
 - Verbatim source blocks are immutable; operational English is separate.
 - No secrets and no runtime state (`.omc/`, `.memsearch/`, `.omb/`) in the repo.
-- A merge uses `references/pr-review-record.md` and `--match-head-commit` (or `scripts/merge-reviewed.sh`).
+- A merge uses `references/pr-review-record.md` and `--match-head-commit`.
 
 ## Script provenance
 
-- `verify.sh` is a cc-loop implementation; Magpie's analogs are `.github/workflows/test.yml`, `make test`, `make test-ui`, and `build/race-shards.sh`.
-- `collect-day.sh` is a cc-loop implementation; Magpie's night-audit collection/trigger is not in its repository.
-- `merge-reviewed.sh` is a cc-loop wrapper; Magpie's rule is the `gh pr merge --match-head-commit <reviewed sha>` command in `docs/code-standards.md`.
+- `lint-package.sh` is a cc-loop package lint, not Magpie's verification. Magpie's analogs are `.github/workflows/test.yml`, `make test`, `make test-ui`, `build/race-shards.sh`, and real machines.
+- Night-audit collection and the reviewed-head merge are native `git` / `gh` commands; the skill ships no wrappers for them.
 
 ## Failure behavior
 
-- Missing reference: `verify.sh` fails; the skill must report it, not silently invent a path.
-- Missing `claude`: `verify.sh` marks the validation `Not run`; the rest of the checks still run.
-- Missing `gh`: `collect-day.sh` marks PRs `Not run`; `merge-reviewed.sh` exits 2; do not invent PR data or merge.
+- Missing reference: `lint-package.sh` fails; the skill must report it, not silently invent a path.
+- Missing `claude`: `lint-package.sh` marks the validation `Not run`; the rest of the checks still run.
+- Missing `gh`: native PR commands fail or are skipped; mark them `Not run`; do not invent PR data or merge.
 - No network/tool access: mark the check `Not run`; do not claim the loop ran.
 
 ## Upstream sources
