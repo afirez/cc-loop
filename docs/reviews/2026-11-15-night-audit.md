@@ -26,6 +26,7 @@
 - A runtime contract is part of the method; prompts alone do not schedule or connect.
 - A missing optional tool degrades to `Not run`, never to a silent pass.
 - Review the merged result, not only the PR head.
+- Label a reimplementation as a reimplementation; name the upstream analog.
 
 ## Promotion
 

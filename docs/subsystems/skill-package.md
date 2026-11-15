@@ -53,6 +53,12 @@
 - No secrets and no runtime state (`.omc/`, `.memsearch/`, `.omb/`) in the repo.
 - A merge uses `references/pr-review-record.md` and `--match-head-commit` (or `scripts/merge-reviewed.sh`).
 
+## Script provenance
+
+- `verify.sh` is a cc-loop implementation; Magpie's analogs are `.github/workflows/test.yml`, `make test`, `make test-ui`, and `build/race-shards.sh`.
+- `collect-day.sh` is a cc-loop implementation; Magpie's night-audit collection/trigger is not in its repository.
+- `merge-reviewed.sh` is a cc-loop wrapper; Magpie's rule is the `gh pr merge --match-head-commit <reviewed sha>` command in `docs/code-standards.md`.
+
 ## Failure behavior
 
 - Missing reference: `verify.sh` fails; the skill must report it, not silently invent a path.

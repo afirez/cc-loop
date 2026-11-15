@@ -334,6 +334,8 @@ description: 用 Magpie 的负反馈闭环让 Claude Code 持续维护项目。�
 
 **仍未内化（需要在目标项目或用户工具链里接）**：`/loop`/cron/CI 调度器、GitHub/Discord/X 连接器、目标项目的 CI/hook、plugin/marketplace 打包、真实三端真机。`cc-loop` 现在有**可执行的包级验收门禁**，但没有 Magpie 那样的完整运行基础设施。
 
+**脚本性质**：`verify.sh`、`collect-day.sh`、`merge-reviewed.sh` 是 cc-loop 的实现，不是 Magpie 仓库里的脚本。对应关系：`verify.sh` ≈ `test.yml` + `make test`/`make test-ui` + `build/race-shards.sh`；`merge-reviewed.sh` ≈ `docs/code-standards.md` 里的 `gh pr merge --match-head-commit` 命令；`collect-day.sh` 没有上游对应物（Magpie 的夜审触发/收集不在仓库）。
+
 ---
 
 这份 `HANDOFF.md` 已把 Skill 名统一为 **`cc-loop`**，目录、frontmatter `name`、触发词和测试指令全部对齐。下一个 Claude Code 会话可以直接从 **§4 实施步骤**开始，第一步就是创建 `.claude/skills/cc-loop/` 并写入 `SKILL.md`。

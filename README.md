@@ -38,6 +38,8 @@ This repository also dogfoods the method on itself: `CLAUDE.md`, `AGENTS.md`, `L
 
 Each Loop file contains the **verbatim Chinese source prompt** recovered from yetone's X screenshots, plus an **English operational version** and its provenance.
 
+The three helper scripts are cc-loop implementations, not files copied from Magpie. Magpie's analogs are its CI workflow (`test.yml`), `make test` / `make test-ui`, `build/race-shards.sh`, and the documented `gh pr merge --match-head-commit` command; its night-audit collection is not in the repository.
+
 ## Install
 
 The skill directory must end up at `<project>/.claude/skills/cc-loop/` (project scope) or `~/.claude/skills/cc-loop/` (personal scope).

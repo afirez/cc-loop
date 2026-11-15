@@ -3,6 +3,9 @@
 # Usage: sh verify.sh [repo-root]
 # Exit codes: 0 all checks pass (Not run allowed); 1 one or more checks failed.
 # This script is read-only except for a temporary fixture directory.
+# cc-loop implementation, not a Magpie script. Magpie's analogs are
+# .github/workflows/test.yml, `make test` / `make test-ui`, and
+# build/race-shards.sh.
 
 set -u
 

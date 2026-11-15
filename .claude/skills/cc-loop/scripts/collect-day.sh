@@ -3,6 +3,8 @@
 # Usage: sh collect-day.sh [since] [repo-root]
 # Default since: "24 hours ago". Prints commits, recent tags, merged PRs
 # (if gh is available), and a checklist. Does not modify any file.
+# cc-loop implementation, not a Magpie script. Magpie's night-audit
+# collection/trigger is not in its repository; this gathers the input.
 
 set -u
 

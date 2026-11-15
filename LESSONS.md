@@ -111,3 +111,13 @@ This is the Magpie-style method applied to `cc-loop` itself: each change is revi
 **Seen 1×** (2026-11-15)
 
 **Scope**: Any PR review gate.
+
+## Rule: Label a reimplementation as a reimplementation; name the upstream analog.
+
+**Why**: `verify.sh`, `collect-day.sh`, and `merge-reviewed.sh` were described as "internalized" but are not files from Magpie. Magpie verifies through `test.yml` + `make test`/`make test-ui` + `build/race-shards.sh`, merges with a documented `gh pr merge --match-head-commit` command, and has no night-audit collection script.
+
+**Evidence**: Magpie `test.yml`, `Makefile`, `build/race-shards.sh`, `docs/code-standards.md`; script headers updated; README/Handoff notes.
+
+**Seen 1×** (2026-11-15)
+
+**Scope**: Any artifact that re-creates an upstream behavior.
