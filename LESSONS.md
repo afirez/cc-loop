@@ -181,3 +181,13 @@ This is the Magpie-style method applied to `cc-loop` itself: each change is revi
 **Seen 1×** (2026-11-15)
 
 **Scope**: Any externally connected loop.
+
+## Rule: A release workflow is only proven by a real tag.
+
+**Why**: The workflow file existing is not evidence that tests, packaging, checksums, and the release API work. `v0.1.0` was created, the `release` workflow completed successfully, and all three assets passed `sha256sum -c`.
+
+**Evidence**: `v0.1.0` release; `cc-loop-v0.1.0.tar.gz`, `.zip`, `SHA256SUMS`; run 43704652932.
+
+**Seen 1×** (2026-11-15)
+
+**Scope**: Any release automation.

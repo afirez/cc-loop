@@ -33,6 +33,7 @@
 - A 3-OS matrix on a shell tool catches portability assumptions.
 - A release workflow is a gate, not a tag button.
 - A connector contract is not a connector.
+- A release workflow is only proven by a real tag.
 
 ## Promotion
 

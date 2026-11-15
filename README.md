@@ -182,7 +182,7 @@ No Node or Python runtime is required by the skill itself.
 ## Status and limitations
 
 - Skill validation passes; `lint-package.sh` and the CI workflow run the package lint; `tests/run.sh` covers the lint's fixtures on three OSes; promotion is agent-read (`LESSONS.md` + `Seen`/dates), with no scanner script.
-- **Release:** a `v*` tag runs the tests, packages the skill as `.tar.gz`/`.zip` with `SHA256SUMS`, and creates a GitHub release; it is not Magpie's signing/notarization pipeline.
+- **Release:** `v0.1.0` tested end-to-end; assets `cc-loop-v0.1.0.tar.gz`, `.zip`, and `SHA256SUMS` verified. A `v*` tag runs the tests/lint before packaging; it is not Magpie's signing/notarization pipeline.
 - **Not included:** a scheduler, real GitHub/Discord/X connectors, target-project CI/hooks, plugin/marketplace packaging, and real machines.
 - The Loops are executed by Claude Code when invoked; they are not a background service.
 
