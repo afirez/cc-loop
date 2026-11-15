@@ -37,6 +37,7 @@ Load the relevant file on demand; do not read all of them at once:
 - Runtime, scheduling, and required tools: `references/loop-runtime.md`
 - Connectors and tool contract: `references/connectors.md`
 - Real surfaces to record: `references/verification-matrix.md`
+- Copy-paste `/loop` templates: `references/loop-prompt-templates.md`
 
 ## Optional tools
 

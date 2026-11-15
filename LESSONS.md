@@ -191,3 +191,13 @@ This is the Magpie-style method applied to `cc-loop` itself: each change is revi
 **Seen 1×** (2026-11-15)
 
 **Scope**: Any release automation.
+
+## Rule: A copy-paste template is not the verbatim source.
+
+**Why**: The `/loop` templates in `loop-prompt-templates.md` have placeholders and are editable; the source prompt blocks are immutable. Mixing them would turn the source into a paraphrase.
+
+**Evidence**: `references/loop-prompt-templates.md`; the `Source prompt (verbatim)` blocks.
+
+**Seen 1×** (2026-11-15)
+
+**Scope**: Any skill that offers copy-paste prompts.

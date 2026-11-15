@@ -4,6 +4,10 @@ The three loop files are prompts. This file describes how to run them and what t
 
 Magpie's own repository does **not** contain the scheduler, the night-audit trigger, the agent choice, or the tool connectors. The source analysis says so explicitly; the `LESSONS.md` update times are irregular and no workflow runs the audit. Do not pretend a loop ran when it did not.
 
+## Who starts a loop
+
+The three prompts are started by a human (or an agent acting for them): paste the prompt into Claude Code `/loop`; the command repeats it. Magpie's repository contains no scheduler that starts the three tasks, and the night-audit trigger is not in the repo. A human can also run the prompt manually each round.
+
 ## Native commands first
 
 Use the agent's own tools before adding a wrapper:

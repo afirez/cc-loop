@@ -328,6 +328,7 @@ description: 用 Magpie 的负反馈闭环让 Claude Code 持续维护项目。�
 |---|---|---|
 | 工程测试套件 | 无 | `tests/run.sh`（6 个 fixture，测试 lint 自身） |
 | 三端 CI | 无 | `.github/workflows/test.yml`（ubuntu/macos/windows 跑 tests + lint） |
+| `/loop` prompt 模板 | 只有逐字原文 | `references/loop-prompt-templates.md`（带占位符，非逐字原文） |
 | 发布流水线 | 无 | `.github/workflows/release.yml`（tag → tests/lint → tar/zip + SHA256SUMS → release；v0.1.0 实测成功） |
 | PR 审查记录（Red check / Break check / Not run） | 只有 prompt | `references/pr-review-record.md`；原生 `gh pr merge --match-head-commit` |
 | 审阅“合到当前 main 后的结果” | 只有 prompt | `loop-github.md` 增加本地合入 main 后跑检查；`pr-review-record.md` 记录 base/merged result |

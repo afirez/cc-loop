@@ -34,6 +34,7 @@
 - A release workflow is a gate, not a tag button.
 - A connector contract is not a connector.
 - A release workflow is only proven by a real tag.
+- A copy-paste template is not the verbatim source.
 
 ## Promotion
 

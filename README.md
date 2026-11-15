@@ -22,6 +22,7 @@ This repository also dogfoods the method on itself: `CLAUDE.md`, `AGENTS.md`, `L
 │   │   ├── loop-runtime.md          # scheduling + tool contract
 │   │   ├── connectors.md            # GitHub/Discord/X tool contract
 │   │   ├── verification-matrix.md   # real surfaces to record
+│   │   ├── loop-prompt-templates.md # copy-paste /loop templates
 │   │   ├── loop-github.md           # Loop 1: GitHub + Discord
 │   │   ├── loop-social.md           # Loop 2: X/Twitter
 │   │   └── loop-night-audit.md      # Loop 3: night audit
@@ -106,13 +107,8 @@ In a Claude Code session, run `/skills` or ask "What skills are available?" and 
    - `.claude/skills/cc-loop/references/loop-social.md`
    - `.claude/skills/cc-loop/references/loop-night-audit.md`
    - `.claude/skills/cc-loop/references/loop-runtime.md` (scheduling and tool contract)
-5. Schedule a loop with Claude Code `/loop`, cron, or CI. Example shape:
-
-   ```text
-   /loop <paste the prompt from references/loop-github.md, translated if you prefer>
-   ```
-
-   The source prompts have no time interval; `/loop` lets the model choose one. The skill does not install a scheduler.
+   - `.claude/skills/cc-loop/references/loop-prompt-templates.md` (copy-paste prompts)
+5. Copy a template from `.claude/skills/cc-loop/references/loop-prompt-templates.md`, fill the `<...>` placeholders (project, test command, release command, Discord server, preset reply, cheap filter), and paste it into Claude Code `/loop` (a human or agent starts it), or wire cron/CI. The source prompts have no time interval; `/loop` lets the model choose one. The skill does not install a scheduler.
 6. Promotion is agent work. Read `LESSONS.md` and count `Seen` / distinct dates:
 
    ```bash
