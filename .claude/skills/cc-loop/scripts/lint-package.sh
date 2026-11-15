@@ -36,6 +36,7 @@ for f in \
   references/loop-prompt-templates.md \
   references/test-discovery.md \
   references/ci-template.md \
+  references/portability.md \
   references/loop-github.md \
   references/loop-social.md \
   references/loop-night-audit.md \

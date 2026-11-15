@@ -331,6 +331,7 @@ description: 用 Magpie 的负反馈闭环让 Claude Code 持续维护项目。�
 | `/loop` prompt 模板 | 只有逐字原文 | `references/loop-prompt-templates.md`（带占位符，非逐字原文） |
 | 测试发现 | 项目自己的 Makefile/CI | `references/test-discovery.md`（原生测试命令，不造通用 runner） |
 | 目标项目 CI 模板 | 无 | `references/ci-template.md`（3-OS matrix 模板，命令由项目填） |
+| 跨工具支持 | Claude Code 原生；Codex/OpenCode 未在 Magpie 中验证 | `references/portability.md`（Claude Code 原生；Codex/OpenCode 只保证方法文档可移植） |
 | 人的偏好/记忆 | Claude Code memory + `docs/subsystems/` 设计文档 | 不新建 `docs/preferences.md`；使用宿主 memory + 现有设计文档 + code-standards 产品决定 |
 | 发布流水线 | 无 | `.github/workflows/release.yml`（tag → tests/lint → tar/zip + SHA256SUMS → release；v0.1.0 实测成功） |
 | PR 审查记录（Red check / Break check / Not run） | PR 评论 / commit body；PR #1339 | `references/pr-review-record.md`；自 2026-11-15 起 cc-loop 自己走 PR 流程 | 记录位置对齐；`docs/reviews/` 转为 legacy |

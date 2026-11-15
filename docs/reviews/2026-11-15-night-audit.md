@@ -39,6 +39,7 @@
 - Keep review records where the review happens, not in a parallel docs tree.
 - Do not invent a preferences file; use the host memory and existing design docs.
 - Templates align the behavior chain; execution waits for credentials or hardware.
+- A Claude Code skill is not automatically a Codex/OpenCode skill.
 
 ## Promotion
 

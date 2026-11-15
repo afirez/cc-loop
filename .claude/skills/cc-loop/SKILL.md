@@ -40,6 +40,7 @@ Load the relevant file on demand; do not read all of them at once:
 - Copy-paste `/loop` templates: `references/loop-prompt-templates.md`
 - Test discovery: `references/test-discovery.md`
 - Target-project CI template: `references/ci-template.md`
+- Portability (Claude Code/Codex/OpenCode): `references/portability.md`
 
 ## Optional tools
 
