@@ -189,4 +189,4 @@ MIT — see [LICENSE](LICENSE).
 
 ## Contributing
 
-Read `docs/contributors.md` before reviewing a PR. Run the Acceptance criteria in `docs/code-standards.md` before opening one. Do not commit secrets or agent-runtime state (`.omc/`, `.memsearch/`, `.omb/`).
+Read `docs/contributors.md` before reviewing a PR. Run the Acceptance criteria in `docs/code-standards.md` before opening one. Maintainer changes also use the PR flow in `docs/contributors.md`; do not push directly to `main`. Do not commit secrets or agent-runtime state (`.omc/`, `.memsearch/`, `.omb/`).
