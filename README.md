@@ -25,6 +25,7 @@ This repository also dogfoods the method on itself: `CLAUDE.md`, `AGENTS.md`, `L
 │   │   ├── loop-prompt-templates.md # copy-paste /loop templates
 │   │   ├── test-discovery.md        # find the project's native tests
 │   │   ├── ci-template.md           # target-project CI matrix template
+│   │   ├── portability.md           # Claude Code/Codex/OpenCode support
 │   │   ├── loop-github.md           # Loop 1: GitHub + Discord
 │   │   ├── loop-social.md           # Loop 2: X/Twitter
 │   │   └── loop-night-audit.md      # Loop 3: night audit
@@ -170,6 +171,14 @@ Target-project CI and hooks remain yours to wire. The skill does not enforce ano
 - Optional, for actual loop execution: `gh` or an MCP GitHub server, a Discord bot, an X API/collector, and a cheap classifier (or a keyword/embedding fallback). The native `gh` commands mark `Not run` when `gh` is unavailable.
 
 No Node or Python runtime is required by the skill itself.
+
+## Portability
+
+- **Claude Code**: native skill discovery at `.claude/skills/cc-loop`; `/cc-loop`; `/loop`.
+- **Codex**: reads `AGENTS.md`; the method docs and prompt templates are portable. `/loop` is reported by a secondary source, not verified here.
+- **OpenCode**: reads `AGENTS.md` and uses its own agent/command configuration; run the loops manually or via cron. Native discovery and `/loop` are not verified.
+
+See `.claude/skills/cc-loop/references/portability.md`.
 
 ## Provenance
 

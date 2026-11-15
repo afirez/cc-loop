@@ -241,3 +241,13 @@ This is the Magpie-style method applied to `cc-loop` itself: each change is revi
 **Seen 1×** (2026-11-15)
 
 **Scope**: Any externally connected or hardware-dependent behavior.
+
+## Rule: A Claude Code skill is not automatically a Codex/OpenCode skill.
+
+**Why**: The `.claude/skills` layout, `SKILL.md` frontmatter, `/cc-loop`, and `claude plugin validate` are Claude Code-specific. Codex and OpenCode read `AGENTS.md`; the method docs and prompt templates are portable, but their skill discovery and `/loop` are not verified.
+
+**Evidence**: `references/portability.md`; dotey's `/loop` claim is secondary; OpenCode has no verified `/loop`.
+
+**Seen 1×** (2026-11-15)
+
+**Scope**: Any skill that claims multi-tool support.
