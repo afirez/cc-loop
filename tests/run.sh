@@ -56,7 +56,8 @@ rm -rf "$d"
 
 # 3. A mismatched frontmatter name fails.
 d=$(fixture)
-sed -i 's/^name: cc-loop$/name: wrong/' "$d/.claude/skills/cc-loop/SKILL.md"
+f="$d/.claude/skills/cc-loop/SKILL.md"
+sed 's/^name: cc-loop$/name: wrong/' "$f" > "$f.tmp" && mv "$f.tmp" "$f"
 out=$(run_lint "$d"); code=$?
 if [ "$code" -ne 0 ] && printf '%s\n' "$out" | grep -q "FAIL frontmatter name 'wrong'"; then
   ok "wrong name fails"
