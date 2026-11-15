@@ -36,6 +36,7 @@
 - A release workflow is only proven by a real tag.
 - A copy-paste template is not the verbatim source.
 - A skill should discover the project's native test command, not ship a universal runner.
+- Keep review records where the review happens, not in a parallel docs tree.
 
 ## Promotion
 

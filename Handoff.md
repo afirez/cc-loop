@@ -331,7 +331,7 @@ description: 用 Magpie 的负反馈闭环让 Claude Code 持续维护项目。�
 | `/loop` prompt 模板 | 只有逐字原文 | `references/loop-prompt-templates.md`（带占位符，非逐字原文） |
 | 测试发现 | 项目自己的 Makefile/CI | `references/test-discovery.md`（原生测试命令，不造通用 runner） |
 | 发布流水线 | 无 | `.github/workflows/release.yml`（tag → tests/lint → tar/zip + SHA256SUMS → release；v0.1.0 实测成功） |
-| PR 审查记录（Red check / Break check / Not run） | 只有 prompt | `references/pr-review-record.md`；原生 `gh pr merge --match-head-commit` |
+| PR 审查记录（Red check / Break check / Not run） | PR 评论 / commit body；PR #1339 | `references/pr-review-record.md`；`docs/reviews/` 仅 dogfood | 记录格式对齐；`docs/reviews/` 是本地增强 |
 | 审阅“合到当前 main 后的结果” | 只有 prompt | `loop-github.md` 增加本地合入 main 后跑检查；`pr-review-record.md` 记录 base/merged result |
 | 社区 PR 危害/关闭/黑名单模板 | 路由到 `docs/contributors.md`，但无模板 | `references/contributors-template.md` |
 | 子系统 reference / 验证命令模板 | 路由到 `docs/subsystems/`，但无模板 | `references/subsystems-template.md` |

@@ -37,7 +37,7 @@ This repository also dogfoods the method on itself: `CLAUDE.md`, `AGENTS.md`, `L
 ├── CLAUDE.md                        # dogfood: @AGENTS.md + @LESSONS.md
 ├── AGENTS.md                        # dogfood: task routing
 ├── LESSONS.md                       # dogfood: real lessons from this repo
-├── docs/                            # dogfood: standards, contributors, reviews
+├── docs/                            # dogfood: standards, contributors, local review records
 └── Handoff.md                       # design record + source provenance
 ```
 

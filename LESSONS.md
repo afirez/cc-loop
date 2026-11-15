@@ -211,3 +211,13 @@ This is the Magpie-style method applied to `cc-loop` itself: each change is revi
 **Seen 1×** (2026-11-15)
 
 **Scope**: Any skill that claims to verify a target project.
+
+## Rule: Keep review records where the review happens, not in a parallel docs tree.
+
+**Why**: Magpie has no `docs/reviews/`; its records are PR comments and commit bodies. `docs/reviews/` here is a dogfood addition for a single-author repo without PRs. A target project should post the record on the PR, not invent a parallel tree.
+
+**Evidence**: Magpie `docs/` listing; `docs/code-standards.md` ("Write on the PR what was run"); PR #1339; `docs/reviews/README.md`.
+
+**Seen 1×** (2026-11-15)
+
+**Scope**: Any review-record convention.
