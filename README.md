@@ -23,6 +23,7 @@ This repository also dogfoods the method on itself: `CLAUDE.md`, `AGENTS.md`, `L
 │   │   ├── connectors.md            # GitHub/Discord/X tool contract
 │   │   ├── verification-matrix.md   # real surfaces to record
 │   │   ├── loop-prompt-templates.md # copy-paste /loop templates
+│   │   ├── test-discovery.md        # find the project's native tests
 │   │   ├── loop-github.md           # Loop 1: GitHub + Discord
 │   │   ├── loop-social.md           # Loop 2: X/Twitter
 │   │   └── loop-night-audit.md      # Loop 3: night audit

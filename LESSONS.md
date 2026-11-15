@@ -201,3 +201,13 @@ This is the Magpie-style method applied to `cc-loop` itself: each change is revi
 **Seen 1×** (2026-11-15)
 
 **Scope**: Any skill that offers copy-paste prompts.
+
+## Rule: A skill should discover the project's native test command, not ship a universal runner.
+
+**Why**: The test suite is project-specific (`Makefile`, `package.json`, `go test`, CI). A universal wrapper would hide the real command and drift. The skill's job is to find the native command, record it in the acceptance criteria, and run it with the agent's tools.
+
+**Evidence**: `references/test-discovery.md`; `docs/code-standards.md` Acceptance criteria; `verification-matrix.md`.
+
+**Seen 1×** (2026-11-15)
+
+**Scope**: Any skill that claims to verify a target project.

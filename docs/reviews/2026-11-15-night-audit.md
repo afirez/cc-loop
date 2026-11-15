@@ -35,6 +35,7 @@
 - A connector contract is not a connector.
 - A release workflow is only proven by a real tag.
 - A copy-paste template is not the verbatim source.
+- A skill should discover the project's native test command, not ship a universal runner.
 
 ## Promotion
 
