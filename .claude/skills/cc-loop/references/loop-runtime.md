@@ -31,7 +31,7 @@ Night audit: choose one of the options above and record which one you use. A nig
 |---|---|---|
 | 1 GitHub + Discord | `git`, GitHub access (`gh`/MCP), Discord access, a local run environment | Mark the missing surface `Not run`; do not merge a PR you could not run |
 | 2 X/Twitter | X search/collection, a cheap filter (Jev or a fallback), a way to reply | Mark `Not run`; do not send unfiltered traffic to the main model |
-| 3 Night audit | Git history, PR/issue access, `LESSONS.md` write access, the promotion scanner | Mark `Not run`; do not invent lessons or `Seen` counts |
+| 3 Night audit | Git history, PR/issue access, `LESSONS.md` write access | Mark `Not run`; do not invent lessons or `Seen` counts |
 
 ## Least privilege
 

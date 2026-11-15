@@ -15,7 +15,7 @@ Every item must be demonstrated before merging or releasing. Anything not run is
 1. **Skill validation**: `claude plugin validate .claude/skills` passes.
 2. **Frontmatter**: `name` matches the directory, `description` is within limits, and only allowed fields are used.
 3. **Reference integrity**: every path that `SKILL.md` and `AGENTS.md` instruct the agent to read exists; explicit prohibitions ("do not create X") are exempt. No reference points to an invented upstream file.
-4. **Script behavior**: the promotion scanner hits 3-distinct-date entries, ignores same-day duplicates and 2-date entries, parses full-width punctuation, exits 2 on a missing file, and is read-only.
+4. **Promotion judgment**: a candidate must have `Seen >= 3` and 3 distinct dates; the night-audit agent reads `LESSONS.md`, moves the rule into `docs/code-standards.md`, and marks it promoted. No script is required.
 5. **Source provenance**: each verbatim source block matches its cited screenshot; operational English is clearly separated from the verbatim block.
 6. **No runtime state**: `.omc/`, `.memsearch/`, `.omb/`, and local editor/OS files are not committed.
 7. **Record**: the change/PR states what was run, at which commit, and what was not run.

@@ -131,3 +131,13 @@ This is the Magpie-style method applied to `cc-loop` itself: each change is revi
 **Seen 1×** (2026-11-15)
 
 **Scope**: Any skill that wraps a single native command.
+
+## Rule: Promotion is an agent judgment, not a script.
+
+**Why**: Magpie's night-audit agent reads `LESSONS.md`, counts `Seen` and distinct dates, and edits `docs/code-standards.md`; the repo has no promotion script. The cc-loop scanner only listed candidates; it was a convenience, not the mechanism, and was removed.
+
+**Evidence**: `LESSONS.md` header; Magpie commits `51247a55` and `d0a4e0be`; no `scripts/` directory; no workflow for lessons.
+
+**Seen 1×** (2026-11-15)
+
+**Scope**: Any rules-promotion mechanism.

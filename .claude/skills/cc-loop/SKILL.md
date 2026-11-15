@@ -38,8 +38,9 @@ Load the relevant file on demand; do not read all of them at once:
 
 ## Optional tools
 
-- `scripts/lint-package.sh`: package-level lint (frontmatter, reference integrity, no runtime state, scanner fixtures, optional `claude plugin validate`). This is not Magpie's verification; the target project's test suite/CI remains the verification. Run it before every change.
-- `scripts/check-lessons-promotion.sh [LESSONS.md]`: read-only scan for entries that meet "Seen ≥ 3 and at least 3 distinct dates" and print promotion candidates.
+- `scripts/lint-package.sh`: package-level lint (frontmatter, reference integrity, no runtime state, optional `claude plugin validate`). This is not Magpie's verification; the target project's test suite/CI remains the verification. Run it before every change.
+
+Promotion is agent work: read `LESSONS.md`, count `Seen` and distinct dates, and move a rule into `docs/code-standards.md` once it has `Seen >= 3` on 3 distinct dates. No script is required.
 
 ## Verification environment (set up before the agent starts)
 

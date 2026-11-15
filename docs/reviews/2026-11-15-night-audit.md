@@ -28,12 +28,11 @@
 - Review the merged result, not only the PR head.
 - Label a reimplementation as a reimplementation; name the upstream analog.
 - Prefer native commands over wrappers for one-command jobs.
+- Promotion is an agent judgment, not a script.
 
 ## Promotion
 
-`sh .claude/skills/cc-loop/scripts/check-lessons-promotion.sh LESSONS.md`
-
-Result: no candidates. All lessons are `Seen 1×` on one date; promotion needs 3 different dates.
+The agent reads `LESSONS.md` and counts `Seen` and distinct dates. All lessons are `Seen 1×` on one date, so none meet the 3-distinct-date rule. No script is used.
 
 ## Cleanup
 

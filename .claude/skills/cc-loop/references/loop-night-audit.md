@@ -46,4 +46,4 @@ Choose `/loop`, cron, CI, or manual. Magpie's own trigger is not in its reposito
 
 - Base promotion on real reviews from different dates; never double-count to reach the threshold.
 - A lesson without evidence (commit/PR/issue number) must not be promoted.
-- `scripts/check-lessons-promotion.sh` can list candidates as an aid; the final decision still comes from the actual review record.
+- The agent counts `Seen` and distinct dates by reading `LESSONS.md`; no script is used. The final decision still comes from the actual review record.

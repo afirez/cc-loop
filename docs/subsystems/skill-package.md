@@ -4,7 +4,8 @@
 
 - `SKILL.md` routes Claude Code to the reference it needs; it does not duplicate the references.
 - `references/` holds the templates, the three loop prompts (verbatim Chinese source + English operational version), the review record, and the runtime contract.
-- `scripts/check-lessons-promotion.sh` scans a `LESSONS.md` and prints promotion candidates; `lint-package.sh` runs the package lint.
+- `scripts/lint-package.sh` runs the package lint.
+- Promotion is agent work: read `LESSONS.md`, count `Seen` and distinct dates, and edit `docs/code-standards.md`; no script is required.
 - `.github/workflows/lint-package.yml` runs `lint-package.sh` on push/PR.
 - The package does not schedule loops, call GitHub/Discord/X APIs, or enforce another project's hooks. Those are the user's toolchain; the skill documents the requirements.
 
@@ -19,7 +20,7 @@
 - Review record / merge gate: `references/pr-review-record.md`.
 - Scheduling and tool contract: `references/loop-runtime.md`.
 - Loop prompts: `references/loop-github.md`, `loop-social.md`, `loop-night-audit.md`.
-- Candidate scanning: `scripts/check-lessons-promotion.sh`.
+- Promotion: agent reads `LESSONS.md`; no script.
 - Package lint: `scripts/lint-package.sh`; CI: `.github/workflows/lint-package.yml`.
 - Provenance and design record: `Handoff.md` §6.
 
@@ -40,7 +41,7 @@
 
 - `sh .claude/skills/cc-loop/scripts/lint-package.sh` (package lint; not the target project's test suite)
 - `claude plugin validate .claude/skills` (lint-package.sh runs it when `claude` is available; otherwise `Not run`)
-- `sh .claude/skills/cc-loop/scripts/check-lessons-promotion.sh LESSONS.md`
+- `grep -n "Seen" LESSONS.md` (agent counts candidates; no script)
 - Native commands: `git log --since="24 hours ago" ...`; `gh pr list --state merged --limit 50 ...`; `gh pr view <pr> --json headRefOid`; `gh pr merge <pr> --match-head-commit <sha>`
 - Frontmatter check: `name` matches the directory; `description` within limits.
 - Reference integrity: every path in `SKILL.md` / `AGENTS.md` exists.
@@ -56,6 +57,7 @@
 
 - `lint-package.sh` is a cc-loop package lint, not Magpie's verification. Magpie's analogs are `.github/workflows/test.yml`, `make test`, `make test-ui`, `build/race-shards.sh`, and real machines.
 - Night-audit collection and the reviewed-head merge are native `git` / `gh` commands; the skill ships no wrappers for them.
+- Promotion is an agent judgment (read `LESSONS.md`, count `Seen`/dates, edit `code-standards.md`), not a script.
 
 ## Failure behavior
 

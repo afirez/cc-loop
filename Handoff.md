@@ -4,7 +4,7 @@
 
 构建一个 Claude Code Skill，名为 **`cc-loop`**，让用户可以在任意项目中复现 yetone 维护 Magpie 的“路由表 + 错题本 + 三 Loop”负反馈闭环。Skill 的核心哲学是 **progressive disclosure**：`SKILL.md` 只做路由，完整内容拆到 `references/` 下按需加载，避免把 SKILL.md 本身变成“超级 Prompt”。
 
-**当前进度**：已落地 `.claude/skills/cc-loop/`（`SKILL.md`、6 个 `references/` 文件、`check-lessons-promotion.sh`）。frontmatter 校验、脚本 fixture 测试、Claude Code 实际发现信号均通过（2026-11-13）。来源已在 §6 考证；`docs/product.md` / `docs/verification.md` 两个自创路径已移除，功能合并回 `docs/code-standards.md`。Skill 包内文档与脚本使用英文；本交接稿保留中文作为设计记录，§3 的草稿为中文，实际落地以英文为准。
+**当前进度**：已落地 `.claude/skills/cc-loop/`（`SKILL.md`、10 个 `references/` 文件、`lint-package.sh`）。package lint、frontmatter 校验、引用完整性、Claude Code 实际发现信号均通过（2026-11-15）。来源已在 §6 考证；`docs/product.md` / `docs/verification.md` 两个自创路径已移除，功能合并回 `docs/code-standards.md`。Skill 包内文档与脚本使用英文；本交接稿保留中文作为设计记录，§3 的草稿为中文，实际落地以英文为准。
 
 **命名约定**：Skill 名为 `cc-loop`，目录必须为 `.claude/skills/cc-loop/`，`SKILL.md` frontmatter 中的 `name` 必须与目录名完全一致（小写字母/数字/连字符）。所有文档中提及本 Skill 时统一使用 `cc-loop`，不要再出现 `magpie-harness`。
 
@@ -49,13 +49,17 @@ Magpie 的 `CLAUDE.md` 极简，只有两个引用：`AGENTS.md` 和 `LESSONS.md
 ├── SKILL.md                        # 路由 + 核心原则，< 5K tokens
 ├── references/
 │   ├── agents-template.md          # AGENTS.md 路由表模板
-│   ├── code-standards-template.md  # 初始硬规则模板（只放 1–2 条不可妥协的）
 │   ├── lessons-format.md           # LESSONS.md 条目格式 + 升格规则
+│   ├── code-standards-template.md  # 硬规则 + 验收 + 产品/人类/发布门禁
+│   ├── contributors-template.md    # 社区 PR 危害/关闭/黑名单
+│   ├── subsystems-template.md      # 子系统 reference + 验证命令
+│   ├── pr-review-record.md         # reviewed head / Red check / Not run
+│   ├── loop-runtime.md             # 调度 + 工具契约 + 原生命令
 │   ├── loop-github.md              # Loop 1 完整 Prompt
 │   ├── loop-social.md              # Loop 2 完整 Prompt（含廉价过滤层）
 │   └── loop-night-audit.md         # Loop 3 完整 Prompt（夜审 + 升格）
 └── scripts/
-    └── check-lessons-promotion.sh  # 可选：扫描 Seen ≥ 3 的条目
+    └── lint-package.sh             # package lint（不是工程测试套件）
 ```
 
 **frontmatter 规范**（Claude Code 官方文档 + Agent Skills 规范，2026-11-13 核对）：
@@ -91,10 +95,11 @@ description: 用 Magpie 的负反馈闭环让 Claude Code 持续维护项目。�
 
 1. 读 `references/agents-template.md`，在用户仓库根目录建立 `CLAUDE.md` 和 `AGENTS.md`。
 2. 读 `references/lessons-format.md`，建立 `LESSONS.md` 骨架。
-3. 按需加载 `references/loop-github.md`、`loop-social.md`、`loop-night-audit.md`，配置三个 Loop。
-4. 从 `references/code-standards-template.md` 建立初始硬规则（只放 1–2 条不可妥协的），并写清 Acceptance criteria（什么算真实运行）与产品决定规则。
-5. 运行 `scripts/check-lessons-promotion.sh`（可选）辅助判断哪些教训达到升格条件。
-6. Magpie 没有 `docs/product.md` / `docs/verification.md`；不要另建这两个文件，产品决定与验收标准都放在 `docs/code-standards.md`。
+3. 按需加载 `references/loop-github.md`、`loop-social.md`、`loop-night-audit.md`、`loop-runtime.md`，配置三个 Loop。
+4. 从 `references/code-standards-template.md` 建立初始硬规则（只放 1–2 条不可妥协的），并写清 Acceptance criteria（什么算真实运行）、产品决定、Release gate、Human gates。
+5. 从 `references/contributors-template.md` 和 `references/subsystems-template.md` 建立 `docs/contributors.md` 与 `docs/subsystems/`。
+6. 升格由 agent 完成：读 `LESSONS.md`，数 `Seen` 和不同日期，达到 `Seen >= 3` 且 3 个不同日期时移入 `docs/code-standards.md`；不使用脚本。
+7. Magpie 没有 `docs/product.md` / `docs/verification.md`；不要另建这两个文件，产品决定与验收标准都放在 `docs/code-standards.md`。
 
 ## 验证环境（必须先于 Agent 工作搭建）
 
@@ -225,17 +230,16 @@ description: 用 Magpie 的负反馈闭环让 Claude Code 持续维护项目。�
 
 1. **创建目录**：在项目根目录创建 `.claude/skills/cc-loop/` 及子目录 `references/`、`scripts/`。
 2. **写入 SKILL.md**：使用 §3.1 的草稿，然后人工检查 frontmatter 的 `name` 是否为 `cc-loop`，且与目录名完全一致。
-3. **写入 references/**：按 §3.2–§3.5 创建六个文件。
-4. **（可选）写入 `scripts/check-lessons-promotion.sh`**：一个简单的 shell 脚本，扫描 `LESSONS.md` 中 `Seen 3×` 且日期数 ≥ 3 的条目并列出，辅助人工/Agent 判断升格。
-5. **在 Claude Code 中测试发现信号**：输入“用 cc-loop 初始化这个项目”或“用 Magpie 模式维护这个项目”，确认 Skill 被正确触发，且 Agent 按 `SKILL.md` 的路由读取对应 `references/` 文件，而不是一次性加载所有内容。
-6. **做一次干运行**：在一个测试仓库中走完“建立路由表 → 跑一次 Loop 1 审查 → 手动触发一次夜审 → 观察一条教训写入 LESSONS.md”的最小闭环。
+3. **写入 references/**：按 §3.2–§3.5 创建十个文件。
+4. **在 Claude Code 中测试发现信号**：输入“用 cc-loop 初始化这个项目”或“用 Magpie 模式维护这个项目”，确认 Skill 被正确触发，且 Agent 按 `SKILL.md` 的路由读取对应 `references/` 文件，而不是一次性加载所有内容。
+5. **做一次干运行**：在一个测试仓库中走完“建立路由表 → 跑一次 Loop 1 审查 → 手动触发一次夜审 → 观察一条教训写入 LESSONS.md”的最小闭环。升格由 agent 读文件完成，不需要脚本。
 
 ---
 
 ## 5. 已知待决问题（留给下一个会话）
 
 - **Skill 的 `disable-model-invocation`**：是否需要设为 `true` 强制用户显式调用？当前设计倾向 `false`（允许自动触发），但如果用户项目较多，自动触发可能产生噪音。建议在测试后根据实际体验决定。
-- **`scripts/check-lessons-promotion.sh` 的语言**：shell 还是 Python？取决于目标用户环境。建议先写一个**只读、只打印候选条目**的最小 shell 版本，避免引入额外依赖。
+- **升格机制已改为 agent 行为**：Magpie 的夜审 agent 直接读 `LESSONS.md`、数 `Seen`/日期并编辑 `docs/code-standards.md`；cc-loop 删除了 `check-lessons-promotion.sh`，不再用脚本判断升格。
 - **Loop 2 的“廉价分类模型”在 Skill 中如何表达**：Skill 本身不能直接调用外部模型。建议在 `loop-social.md` 中写成**指令性约束**（“在进入主模型前，先用一个低成本分类步骤过滤”），把具体实现留给用户按自己的工具链决定，而不是在 Skill 中硬编码某个模型。
 - **Skill 名称的触发词覆盖**：`cc-loop` 本身语义偏抽象，建议在 `description` 中同时保留“Magpie 模式”“错题本”“夜审”等具象触发词，避免用户想用时却想不起 `cc-loop` 这个名字。
 
@@ -309,7 +313,7 @@ description: 用 Magpie 的负反馈闭环让 Claude Code 持续维护项目。�
 | `references/loop-github.md` | yetone X 截图第一条（逐字）；`docs/code-standards.md`（本地拉取运行、red check、`Not run`、merge reviewed head）；`docs/contributors.md` | 逐字 + 一手 |
 | `references/loop-social.md` | yetone X 截图第二条（逐字）；dotey 公开推文、AI智见录文字交叉验证 | 逐字 + 二手交叉验证 |
 | `references/loop-night-audit.md` | yetone X 截图第三条（逐字）；`LESSONS.md`（夜间三类、Seen、升格）；`docs/contributors.md`（黑名单） | 逐字 + 一手 |
-| `scripts/check-lessons-promotion.sh` | 由 `LESSONS.md` 的升格规则推导 | 本项目实现 |
+| lessons 升格 | `LESSONS.md` 的三日规则；夜审 agent 读文件、数 `Seen`、编辑 `code-standards.md` | 一手 + agent 行为 |
 | 验证环境 / Acceptance criteria | `docs/code-standards.md`；`docs/verification.md` 不存在（已移除） | 一手 |
 | 产品决定 / 人的边界 | `docs/code-standards.md` 的 “Don't reverse deliberate decisions”；dotey / AI智见录 的三端真机与记忆/设计文档描述 | 一手 + 二手 |
 | 三个 Loop 的编号与命名 | 本项目对 yetone 三条 `/loop` 的映射 | 本项目命名 |
@@ -328,6 +332,7 @@ description: 用 Magpie 的负反馈闭环让 Claude Code 持续维护项目。�
 | 社区 PR 危害/关闭/黑名单模板 | 路由到 `docs/contributors.md`，但无模板 | `references/contributors-template.md` |
 | 子系统 reference / 验证命令模板 | 路由到 `docs/subsystems/`，但无模板 | `references/subsystems-template.md` |
 | 夜审数据收集 | 只有 prompt | 原生 `git log` / `git for-each-ref` / `gh pr list`（无 collector 脚本） |
+| lessons 升格 | 由 `LESSONS.md` 规则 + 夜审 agent 手工编辑 | 纯 agent 行为；不使用脚本 |
 | 调度与工具契约 | 只有 prompt | `references/loop-runtime.md` |
 | 发布门禁（tag 前 CI 绿、记录 head、Latest） | 未写 | `code-standards-template.md` 的 Release gate |
 | 人的安全/物理/UI 闸门 | 部分写在原则 | `code-standards-template.md` 的 Human gates + `contributors-template.md` |

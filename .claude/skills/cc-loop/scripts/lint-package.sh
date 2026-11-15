@@ -4,7 +4,8 @@
 # Exit codes: 0 all checks pass (Not run allowed); 1 one or more checks failed.
 # This is a package lint, not Magpie's verification. Magpie verifies with
 # .github/workflows/test.yml, `make test` / `make test-ui`, build/race-shards.sh,
-# and real machines. This script is read-only except for a temporary fixture.
+# and real machines. This script is read-only except for a temporary file used
+# by the optional `claude plugin validate` check.
 
 set -u
 
@@ -33,7 +34,6 @@ for f in \
   references/loop-github.md \
   references/loop-social.md \
   references/loop-night-audit.md \
-  scripts/check-lessons-promotion.sh \
   scripts/lint-package.sh
 do
   if [ -f "$SKILL/$f" ]; then pass "exists $f"; else fail "missing $f"; fi
@@ -117,45 +117,11 @@ for f in loop-github.md loop-social.md loop-night-audit.md; do
   fi
 done
 
-# 6. Promotion scanner fixtures
-tmp=$(mktemp -d 2>/dev/null || mktemp -d -t cc-loop-verify)
+# 6. Optional Claude Code validation
+tmp=$(mktemp -d 2>/dev/null || mktemp -d -t cc-loop-lint)
 cleanup() { rm -rf "$tmp"; }
 trap cleanup EXIT INT TERM
 
-cat > "$tmp/LESSONS.md" <<'FIXTURE'
-# Lessons
-
-## Rule: three distinct dates
-
-**Seen 3×** (2026-01-01, 2026-01-02, 2026-01-05)
-
-## Rule: same day three times
-
-**Seen 3×** (2026-01-01, 2026-01-01, 2026-01-01)
-
-## Rule: only two dates
-
-**Seen 2×** (2026-01-01, 2026-01-03)
-
-## Rule: full width punctuation
-
-**Seen 4×**（2026-01-01，2026-01-02，2026-01-05，2026-01-02）
-FIXTURE
-
-before=$(cksum < "$tmp/LESSONS.md")
-out=$(sh "$SKILL/scripts/check-lessons-promotion.sh" "$tmp/LESSONS.md" 2>&1)
-code=$?
-after=$(cksum < "$tmp/LESSONS.md")
-hits=$(printf '%s\n' "$out" | grep -c '^Candidate:' || true)
-if [ "$code" -eq 0 ] && [ "$hits" -eq 2 ] && [ "$before" = "$after" ]; then
-  pass "promotion fixtures (2 candidates, read-only)"
-else
-  fail "promotion fixtures (exit $code, hits $hits)"
-fi
-sh "$SKILL/scripts/check-lessons-promotion.sh" "$tmp/missing.md" >/dev/null 2>&1
-if [ $? -eq 2 ]; then pass "missing LESSONS.md exits 2"; else fail "missing LESSONS.md exit code"; fi
-
-# 7. Optional Claude Code validation
 if command -v claude >/dev/null 2>&1; then
   if (cd "$ROOT" && claude plugin validate .claude/skills >"$tmp/claude.out" 2>&1); then
     pass "claude plugin validate"
@@ -167,7 +133,7 @@ else
   notrun "claude plugin validate (claude not found)"
 fi
 
-# 8. Repository docs (warnings, not gates)
+# 7. Repository docs (warnings, not gates)
 if [ -f "$ROOT/README.md" ]; then pass "README present"; else notrun "README missing"; fi
 if [ -f "$ROOT/LICENSE" ]; then pass "LICENSE present"; else notrun "LICENSE missing"; fi
 

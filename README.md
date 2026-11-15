@@ -24,7 +24,6 @@ This repository also dogfoods the method on itself: `CLAUDE.md`, `AGENTS.md`, `L
 │   │   ├── loop-social.md           # Loop 2: X/Twitter
 │   │   └── loop-night-audit.md      # Loop 3: night audit
 │   └── scripts/
-│       ├── check-lessons-promotion.sh
 │       └── lint-package.sh          # package lint, not project verification
 ├── .github/workflows/lint-package.yml  # CI runs lint-package.sh
 ├── CLAUDE.md                        # dogfood: @AGENTS.md + @LESSONS.md
@@ -106,13 +105,13 @@ In a Claude Code session, run `/skills` or ask "What skills are available?" and 
    ```
 
    The source prompts have no time interval; `/loop` lets the model choose one. The skill does not install a scheduler.
-6. Scan promotion candidates at any time:
+6. Promotion is agent work. Read `LESSONS.md` and count `Seen` / distinct dates:
 
    ```bash
-   sh .claude/skills/cc-loop/scripts/check-lessons-promotion.sh LESSONS.md
+   grep -n "Seen" LESSONS.md
    ```
 
-   The scan is read-only. It prints entries with `Seen >= 3` and at least 3 distinct dates; a missing file exits with code 2.
+   Move a rule into `docs/code-standards.md` when it has `Seen >= 3` on 3 distinct dates, and mark it promoted. No scanner script is required.
 
 7. Run the package lint and use native commands for the rest:
 
@@ -173,7 +172,7 @@ No Node or Python runtime is required by the skill itself.
 
 ## Status and limitations
 
-- Skill validation passes; `lint-package.sh` and the CI workflow run the package lint; the promotion scanner has fixture tests and is read-only.
+- Skill validation passes; `lint-package.sh` and the CI workflow run the package lint; promotion is agent-read (`LESSONS.md` + `Seen`/dates), with no scanner script.
 - **Not included:** a scheduler, GitHub/Discord/X connectors, target-project CI/hooks, and plugin/marketplace packaging.
 - The Loops are executed by Claude Code when invoked; they are not a background service.
 

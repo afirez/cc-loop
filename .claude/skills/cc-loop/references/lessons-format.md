@@ -25,4 +25,4 @@ When the same rule is observed in reviews on **3 different dates** (`Seen 3×` w
 > Promoted to `docs/code-standards.md` (<date>)
 ```
 
-- `scripts/check-lessons-promotion.sh` can list candidates.
+- Promotion is done by the night-audit agent: read `LESSONS.md`, count `Seen` and distinct dates, move the entry into `docs/code-standards.md`, and mark it promoted. No script is required.
