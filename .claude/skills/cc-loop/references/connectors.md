@@ -24,6 +24,15 @@ Use native tools first. This file describes what each surface needs and how to m
 - Never send the full stream to the main model.
 - If unavailable: `Not run`.
 
+## When credentials arrive
+
+The contract is usable before any credential exists. When the human provides one:
+
+1. Put it in the host's secret store or environment; never commit it.
+2. Run a read-only smoke test first (`gh auth status`, a channel list, an account lookup).
+3. Grant the minimum scope; do not add admin or write scopes before the loop needs them.
+4. Record the first real run in `references/verification-matrix.md`; until then the surface is `Not run`.
+
 ## Credentials and permissions
 
 - Use environment variables or a secret store; never commit tokens.

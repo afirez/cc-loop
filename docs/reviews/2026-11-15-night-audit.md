@@ -37,6 +37,8 @@
 - A copy-paste template is not the verbatim source.
 - A skill should discover the project's native test command, not ship a universal runner.
 - Keep review records where the review happens, not in a parallel docs tree.
+- Do not invent a preferences file; use the host memory and existing design docs.
+- Templates align the behavior chain; execution waits for credentials or hardware.
 
 ## Promotion
 

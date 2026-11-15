@@ -35,6 +35,7 @@ for f in \
   references/verification-matrix.md \
   references/loop-prompt-templates.md \
   references/test-discovery.md \
+  references/ci-template.md \
   references/loop-github.md \
   references/loop-social.md \
   references/loop-night-audit.md \
